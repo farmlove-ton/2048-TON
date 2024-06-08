@@ -1,0 +1,20 @@
+.profilePage__form {
+    padding: 163px 24px 50px;
+    height: 100vh;
+    background-color: #000;
+}
+
+h1.profilePage__form-title {
+    line-height: 78px;
+    font-size: 24px;
+    color: #FFFFFF;
+}
+
+.profilePage__form-inputPhoto {
+    height: 135px;
+    width: 140px;
+    display: inline-block;
+    border: none;
+    outline: none;
+    background: transparent url('./img/addphoto.png');
+}

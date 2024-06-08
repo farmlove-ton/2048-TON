@@ -1,9 +1,8 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import { HomePage, CreateProfilePage } from "./pages";
+import { HomePage, CreateProfilePage, AddProfilePhotoPage } from "./pages";
 
 import "./App.css";
-import { AddProfilePhotos } from "./pages/AddProfilePhotos";
 
 function App() {
   return (
@@ -11,7 +10,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/create-profile" element={<CreateProfilePage />} />
-        <Route path="/add-profile-photos" element={<AddProfilePhotos />} />
+        <Route path="/add-photo" element={<AddProfilePhotoPage />} />
       </Routes>
     </Router>
   );
