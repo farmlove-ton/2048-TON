@@ -1,11 +1,11 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 import { Button, Input, Tab } from "../../components";
-import { getUser } from "../../lib/adapter";
 import { showBackButton } from "../../lib/telegram";
 import Select from "../../components/Select";
+import { UserProfileContext } from "../../context/UserProfileContext";
 
 interface IFormInput {
   name: string;
@@ -15,11 +15,11 @@ interface IFormInput {
 }
 
 const CreateProfilePage = () => {
-  const user = getUser();
+  const { userProfile, setUserProfile } = useContext(UserProfileContext);
 
   const { register, control, handleSubmit } = useForm<IFormInput>({
     defaultValues: {
-      name: user?.fullName || "",
+      name: userProfile?.name || "",
     },
   });
   const navigate = useNavigate();
@@ -29,7 +29,8 @@ const CreateProfilePage = () => {
   }, []);
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    console.log(data);
+    setUserProfile({ ...userProfile, ...data });
+
     navigate("/tell-us-more");
   };
 
@@ -49,7 +50,6 @@ const CreateProfilePage = () => {
           <h2 className="text-2xl">Find your perfect match</h2>
           <div className="flex flex-col space-y-2">
             <Input {...register("name")} placeholder="Name" />
-            <Input {...register("description")} placeholder="About you" />
             <Input
               {...register("age")}
               placeholder="Enter your age"

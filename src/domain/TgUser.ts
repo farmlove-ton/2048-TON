@@ -5,7 +5,7 @@ interface ICreate {
   username?: string;
 }
 
-export class User {
+export class TgUser {
   private constructor(
     public id: number,
     public firstName: string,
@@ -20,6 +20,11 @@ export class User {
   }
 
   static create(input: ICreate) {
-    return new User(input.id, input.firstName, input.lastName, input.username);
+    return new TgUser(
+      input.id,
+      input.firstName,
+      input.lastName,
+      input.username
+    );
   }
 }

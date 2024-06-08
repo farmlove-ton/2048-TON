@@ -1,11 +1,11 @@
-import { User } from "../domain/User";
+import { TgUser } from "../domain/TgUser";
 import { getUserData } from "./telegram";
 
-export const getUser = () => {
+export const getTgUser = () => {
   const userData = getUserData();
   return (
     userData &&
-    User.create({
+    TgUser.create({
       id: userData.id,
       firstName: userData.first_name,
       lastName: userData.last_name,

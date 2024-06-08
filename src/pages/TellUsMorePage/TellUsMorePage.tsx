@@ -1,26 +1,19 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 import { Button, Input, Tab } from "../../components";
-import { getUser } from "../../lib/adapter";
 import { showBackButton } from "../../lib/telegram";
+import { UserProfileContext } from "../../context/UserProfileContext";
 
 interface IFormInput {
-  name: string;
-  description: string;
-  age: number;
-  gender: string;
+  bio: string;
 }
 
 const TellUsMorePage = () => {
-  const user = getUser();
+  const { userProfile, setUserProfile } = useContext(UserProfileContext);
 
-  const { register, handleSubmit } = useForm<IFormInput>({
-    defaultValues: {
-      name: user?.fullName || "",
-    },
-  });
+  const { register, handleSubmit } = useForm<IFormInput>({});
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,7 +21,8 @@ const TellUsMorePage = () => {
   }, []);
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    console.log(data);
+    setUserProfile({ ...userProfile, ...data });
+
     navigate("/add-photo");
   };
 
@@ -47,13 +41,7 @@ const TellUsMorePage = () => {
         <div className="flex flex-col space-y-4">
           <h2 className="text-2xl">Tell us more about you</h2>
           <div className="flex flex-col space-y-2">
-            <Input {...register("name")} placeholder="Name" />
-            <Input {...register("description")} placeholder="About you" />
-            <Input
-              {...register("age")}
-              placeholder="Enter your age"
-              type="number"
-            />
+            <Input {...register("bio")} placeholder="About you" />
           </div>
         </div>
       </div>
