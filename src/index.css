@@ -7,9 +7,10 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
+  color-scheme: dark light;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background: #1a1a1a;
+  background: linear-gradient(180deg, #1a1a1a 0%, #2c1a48 30%, #1a1a1a 100%);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -32,7 +33,7 @@ body {
   min-height: 100vh;
 }
 
-@media (prefers-color-scheme: light) {
+/* @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
@@ -40,4 +41,4 @@ body {
   a:hover {
     color: #747bff;
   }
-}
+} */

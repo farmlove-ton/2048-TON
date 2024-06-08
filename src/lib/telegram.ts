@@ -5,6 +5,8 @@ export const initWebApp = () => {
   WebApp.BackButton.onClick(() => {
     window.history.back();
   });
+
+  WebApp.setHeaderColor("#1A1A1A");
 };
 
 export const showBackButton = () => {

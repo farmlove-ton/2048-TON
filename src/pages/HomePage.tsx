@@ -10,7 +10,7 @@ const HomaPage = () => {
   }, []);
 
   return (
-    <div className="space-y-8 mt-20">
+    <div className="p-4 space-y-8 pt-20">
       <div>
         <p className="text-6xl">Find your love</p>
         <p className="text-6xl font-bold">easily & quickly</p>

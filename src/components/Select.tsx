@@ -6,6 +6,7 @@ import {
 } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/16/solid";
 import classNames from "classnames";
+import { forwardRef } from "react";
 
 interface IOption<T> {
   value: T;
@@ -34,16 +35,14 @@ const classes = {
   option: "flex cursor-default select-none relative py-2 pl-3 pr-9",
 };
 
-const Select = <T extends string>({
-  value,
-  placeholder,
-  onChange,
-  options,
-}: IProps<T>) => {
+const Select = <T extends string>(
+  { value, placeholder, onChange, options }: IProps<T>,
+  ref: React.Ref<HTMLElement>
+) => {
   const selectedOption = options.find((opt) => opt.value === value);
 
   return (
-    <Listbox value={value} onChange={onChange}>
+    <Listbox ref={ref} value={value} onChange={onChange}>
       <div className={classes.selectWrapper}>
         <ListboxButton className={classes.select}>
           {selectedOption ? (
@@ -87,4 +86,6 @@ const Select = <T extends string>({
   );
 };
 
-export default Select;
+const WithRefSelect = forwardRef(Select);
+
+export default WithRefSelect;

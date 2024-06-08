@@ -34,7 +34,7 @@ const TellUsMorePage = () => {
 
   return (
     <form
-      className="flex flex-col h-full justify-between"
+      className="p-4 flex flex-col h-full justify-between"
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className="space-y-8">
