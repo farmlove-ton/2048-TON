@@ -5,6 +5,7 @@ import {
   CreateProfilePage,
   AddProfilePhotoPage,
   TellUsMorePage,
+  SuggestionPage,
 } from "./pages";
 
 import "./App.css";
@@ -17,6 +18,7 @@ function App() {
         <Route path="/create-profile" element={<CreateProfilePage />} />
         <Route path="/tell-us-more" element={<TellUsMorePage />} />
         <Route path="/add-photo" element={<AddProfilePhotoPage />} />
+        <Route path="/suggestion" element={<SuggestionPage />} />
       </Routes>
     </Router>
   );
