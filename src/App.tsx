@@ -27,11 +27,12 @@ function App() {
 
       <div className="card">
         <button
-          onClick={() =>
-            WebApp.showAlert(`Hello World! Current count is ${count}`)
-          }
+          onClick={() => {
+            WebApp.showAlert(`Hello World! Current count is ${count}`);
+            console.log(WebApp.initDataUnsafe.user?.id);
+          }}
         >
-          Show Alert1
+          Show Alert
         </button>
       </div>
     </>
