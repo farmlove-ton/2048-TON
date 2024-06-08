@@ -19,6 +19,7 @@ function App() {
         <Route path="/tell-us-more" element={<TellUsMorePage />} />
         <Route path="/add-photo" element={<AddProfilePhotoPage />} />
         <Route path="/suggestion" element={<SuggestionPage />} />
+        <Route path="/suggestion/profile" element={<SuggestionPage />} />
       </Routes>
     </Router>
   );

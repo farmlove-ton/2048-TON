@@ -12,17 +12,6 @@ const getSuggestion = () => {
   };
 };
 
-const LovePoints = () => {
-  return (
-    <div className="font-bold">
-      love points
-      <div className="border border-white border-1 rounded-xl flex items-center justify-center">
-        7909
-      </div>
-    </div>
-  );
-};
-
 const Confirmed = () => {
   return (
     <div className="px-2 py-1 opacity-70 text-xs space-x-2 border border-white text-white  border-1 rounded-full flex items-center justify-center">
@@ -31,19 +20,12 @@ const Confirmed = () => {
   );
 };
 
-const SuggestionPage = () => {
+const SuggestionProfilePage = () => {
   const suggestion = getSuggestion();
 
   return (
-    <div className="relative h-full flex flex-col">
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${suggestion.media[0]})` }}
-      ></div>
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black opacity-70 pointer-events-none"></div>
-      <div className="absolute top-4 left-4">
-        <LovePoints />
-      </div>
+    <div className="h-full flex flex-col">
+      <div className="font-bold">Profile</div>
       <div className="relative mt-auto p-4 space-y-4 z-10">
         <div className="flex items-center font-bold space-x-2">
           <span className="text-xl">{suggestion.name}</span>
@@ -68,4 +50,4 @@ const SuggestionPage = () => {
   );
 };
 
-export default SuggestionPage;
+export default SuggestionProfilePage;

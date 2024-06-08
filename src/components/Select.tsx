@@ -23,7 +23,7 @@ type IProps<T> = {
 const classes = {
   selectWrapper: "relative",
   select:
-    "relative text-left appearance-none block w-full text-gray-700 border-b border-gray-200 py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+    "relative text-left appearance-none block w-full border-b border-gray-200 py-3 px-4 leading-tight focus:outline-none focus:border-gray-500",
   placeholder: "text-[#9ca3ae]",
   selectIconWrapper:
     "absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none",
@@ -31,7 +31,7 @@ const classes = {
   dropdown:
     "mt-1 bg-white shadow-lg max-h-60 py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm",
   optionActive: "text-white bg-[#7000a0]",
-  optionInactive: "",
+  optionInactive: "text-[#7000a0]",
   option: "flex cursor-default select-none relative py-2 pl-3 pr-9",
 };
 
@@ -65,10 +65,10 @@ const Select = <T extends string>(
               value={value}
               className={({ selected, focus }) =>
                 classNames(
+                  classes.option,
                   selected || focus
                     ? classes.optionActive
-                    : classes.optionInactive,
-                  classes.option
+                    : classes.optionInactive
                 )
               }
             >
