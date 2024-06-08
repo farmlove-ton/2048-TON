@@ -1,19 +1,26 @@
 import WebApp from "@twa-dev/sdk";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
+import { hideBackButton } from "../lib/telegram";
+import { Button } from "../components";
+
 const HomaPage = () => {
+  useEffect(() => {
+    hideBackButton();
+  }, []);
+
   return (
     <>
       <Link to="/create-profile">Create profile page</Link>
 
-      <button
+      <Button
         onClick={() => {
           WebApp.showAlert(`Hello World! Current count is 123`);
-          console.log(WebApp.initDataUnsafe.user?.id);
         }}
       >
         Show Alert
-      </button>
+      </Button>
     </>
   );
 };

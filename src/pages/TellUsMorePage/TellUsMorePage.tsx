@@ -1,12 +1,11 @@
 import { useEffect } from "react";
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 import { Button, Input, Tab } from "../../components";
 import Layout from "./Layout";
 import { getUser } from "../../lib/adapter";
-import { hideBackButton } from "../../lib/telegram";
-import Select from "../../components/Select";
+import { showBackButton } from "../../lib/telegram";
 
 interface IFormInput {
   name: string;
@@ -15,10 +14,10 @@ interface IFormInput {
   gender: string;
 }
 
-const CreateProfilePage = () => {
+const TellUsMorePage = () => {
   const user = getUser();
 
-  const { register, control, handleSubmit } = useForm<IFormInput>({
+  const { register, handleSubmit } = useForm<IFormInput>({
     defaultValues: {
       name: user?.fullName || "",
     },
@@ -26,23 +25,23 @@ const CreateProfilePage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    hideBackButton();
+    showBackButton();
   }, []);
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     console.log(data);
-    navigate("/tell-us-more");
+    navigate("/add-photo");
   };
 
   return (
     <div className="space-y-8">
       <div className="flex justify-between items-center space-x-2">
-        <Tab isSelected />
         <Tab />
+        <Tab isSelected />
         <Tab />
       </div>
 
-      <Layout title="Find your perfect match">
+      <Layout title="Tell us more about you                  ">
         <form
           className="flex flex-col space-y-2"
           onSubmit={handleSubmit(onSubmit)}
@@ -54,20 +53,7 @@ const CreateProfilePage = () => {
             placeholder="Enter your age"
             type="number"
           />
-          <Controller
-            name="gender"
-            control={control}
-            render={({ field }) => (
-              <Select
-                placeholder="Gender"
-                {...field}
-                options={[
-                  { value: "male", label: "Male" },
-                  { value: "female", label: "Female" },
-                ]}
-              />
-            )}
-          />
+          <Input {...register("gender")} placeholder="Gender" />
 
           <Button type="submit">Continue</Button>
         </form>
@@ -76,4 +62,4 @@ const CreateProfilePage = () => {
   );
 };
 
-export default CreateProfilePage;
+export default TellUsMorePage;
