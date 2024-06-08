@@ -3,7 +3,6 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 import { Button, Input, Tab } from "../../components";
-import Layout from "./Layout";
 import { getUser } from "../../lib/adapter";
 import { showBackButton } from "../../lib/telegram";
 
@@ -34,31 +33,33 @@ const TellUsMorePage = () => {
   };
 
   return (
-    <div className="space-y-8">
-      <div className="flex justify-between items-center space-x-2">
-        <Tab />
-        <Tab isSelected />
-        <Tab />
+    <form
+      className="flex flex-col h-full justify-between"
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <div className="space-y-8">
+        <div className="flex justify-between items-center space-x-2">
+          <Tab />
+          <Tab isSelected />
+          <Tab />
+        </div>
+
+        <div className="flex flex-col space-y-4">
+          <h2 className="text-2xl">Tell us more about you</h2>
+          <div className="flex flex-col space-y-2">
+            <Input {...register("name")} placeholder="Name" />
+            <Input {...register("description")} placeholder="About you" />
+            <Input
+              {...register("age")}
+              placeholder="Enter your age"
+              type="number"
+            />
+          </div>
+        </div>
       </div>
 
-      <Layout title="Tell us more about you                  ">
-        <form
-          className="flex flex-col space-y-2"
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <Input {...register("name")} placeholder="Name" />
-          <Input {...register("description")} placeholder="About you" />
-          <Input
-            {...register("age")}
-            placeholder="Enter your age"
-            type="number"
-          />
-          <Input {...register("gender")} placeholder="Gender" />
-
-          <Button type="submit">Continue</Button>
-        </form>
-      </Layout>
-    </div>
+      <Button type="submit">Continue</Button>
+    </form>
   );
 };
 

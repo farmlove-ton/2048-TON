@@ -3,7 +3,6 @@ import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 import { Button, Input, Tab } from "../../components";
-import Layout from "./Layout";
 import { getUser } from "../../lib/adapter";
 import { showBackButton } from "../../lib/telegram";
 import Select from "../../components/Select";
@@ -35,18 +34,19 @@ const CreateProfilePage = () => {
   };
 
   return (
-    <div className="space-y-8 h-full">
-      <div className="flex justify-between items-center space-x-2">
-        <Tab isSelected />
-        <Tab />
-        <Tab />
-      </div>
+    <form
+      className="flex flex-col h-full justify-between"
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <div className="space-y-8">
+        <div className="flex justify-between items-center space-x-2">
+          <Tab isSelected />
+          <Tab />
+          <Tab />
+        </div>
 
-      <Layout title="Find your perfect match">
-        <form
-          className="flex flex-col h-full justify-between"
-          onSubmit={handleSubmit(onSubmit)}
-        >
+        <div className="flex flex-col space-y-4">
+          <h2 className="text-2xl">Find your perfect match</h2>
           <div className="flex flex-col space-y-2">
             <Input {...register("name")} placeholder="Name" />
             <Input {...register("description")} placeholder="About you" />
@@ -70,10 +70,11 @@ const CreateProfilePage = () => {
               )}
             />
           </div>
-          <Button type="submit">Continue</Button>
-        </form>
-      </Layout>
-    </div>
+        </div>
+      </div>
+
+      <Button type="submit">Continue</Button>
+    </form>
   );
 };
 
