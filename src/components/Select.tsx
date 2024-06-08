@@ -64,9 +64,11 @@ const Select = <T extends string>({
             <ListboxOption
               key={value}
               value={value}
-              className={({ selected }) =>
+              className={({ selected, focus }) =>
                 classNames(
-                  selected ? classes.optionActive : classes.optionInactive,
+                  selected || focus
+                    ? classes.optionActive
+                    : classes.optionInactive,
                   classes.option
                 )
               }

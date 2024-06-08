@@ -1,9 +1,8 @@
-import WebApp from "@twa-dev/sdk";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import { hideBackButton } from "../lib/telegram";
-import { Button } from "../components";
+import { Button, Checkbox } from "../components";
 
 const HomaPage = () => {
   useEffect(() => {
@@ -11,17 +10,23 @@ const HomaPage = () => {
   }, []);
 
   return (
-    <>
-      <Link to="/create-profile">Create profile page</Link>
+    <div className="space-y-8 mt-20">
+      <div>
+        <p className="text-6xl">Find your love</p>
+        <p className="text-6xl font-bold">easily & quickly</p>
+      </div>
+      <p>
+        Our date app is the perfect way to find your first love or interesting
+        expierence.
+      </p>
 
-      <Button
-        onClick={() => {
-          WebApp.showAlert(`Hello World! Current count is 123`);
-        }}
-      >
-        Show Alert
-      </Button>
-    </>
+      <div className="flex flex-col space-y-2 items-center justify-center">
+        <Link className="w-full" to="/create-profile">
+          <Button className="w-full">Start</Button>
+        </Link>
+        <Checkbox label="I am more than 18 years" />
+      </div>
+    </div>
   );
 };
 
