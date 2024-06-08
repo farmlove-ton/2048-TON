@@ -1,7 +1,14 @@
 .profilePage__form {
+    max-width: 375px;
     padding: 163px 24px 50px;
     height: 100vh;
     background-color: #000;
+}
+
+.profilePage__form img{
+    height: 135px;
+    width: 140px;
+    border-radius: 20px;
 }
 
 h1.profilePage__form-title {
@@ -10,11 +17,38 @@ h1.profilePage__form-title {
     color: #FFFFFF;
 }
 
+.profilePage__form-photo {
+    display: flex;
+    column-gap: 10px;
+    row-gap: 20px;
+}
+
 .profilePage__form-inputPhoto {
     height: 135px;
     width: 140px;
-    display: inline-block;
-    border: none;
-    outline: none;
+    
+    color: transparent;
     background: transparent url('./img/addphoto.png');
+}
+
+.profilePage__form-inputPhoto::-webkit-file-upload-button {
+    visibility: hidden;
+}
+
+.profilePage__form-text {
+    margin: 256px 0 12px;
+
+    color: #B9C1BE;
+}
+
+.btn {
+    width: 100%;
+    padding-top: 16px;
+    padding-bottom: 16px;
+
+}
+
+.btn span {
+    line-height: 16px;
+    color: #000E08;
 }
