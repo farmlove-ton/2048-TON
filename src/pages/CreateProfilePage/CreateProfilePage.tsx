@@ -6,6 +6,7 @@ import { Button, Input, Tab } from "../../components";
 import { getUser } from "../../lib/adapter";
 import { showBackButton } from "../../lib/telegram";
 import Select from "../../components/Select";
+import {TonConnectButton} from "@tonconnect/ui-react";
 
 interface IFormInput {
   name: string;
@@ -73,6 +74,9 @@ const CreateProfilePage = () => {
         </div>
       </div>
 
+      <footer style={{ display: "flex", justifyContent: "center" }}>
+        <TonConnectButton/>
+      </footer>
       <Button type="submit">Continue</Button>
     </form>
   );
