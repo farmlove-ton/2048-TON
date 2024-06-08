@@ -1,6 +1,7 @@
 import { useContext, useEffect } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { TonConnectButton } from "@tonconnect/ui-react";
 
 import { Button, Input, Tab } from "../../components";
 import { showBackButton } from "../../lib/telegram";
@@ -73,6 +74,9 @@ const CreateProfilePage = () => {
         </div>
       </div>
 
+      <footer style={{ display: "flex", justifyContent: "center" }}>
+        <TonConnectButton />
+      </footer>
       <Button type="submit">Continue</Button>
     </form>
   );
