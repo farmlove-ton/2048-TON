@@ -18,7 +18,7 @@ function App() {
           manifestUrl="https://33f7839febb6546c.ngrok.app/tonconnect-manifest.json"
           uiPreferences={{theme: THEME.DARK}}
       >
-    <UserProfileProvider>
+    {/*<UserProfileProvider>*/}
         <Router>
           <Routes>
             <Route path="/" element={<HomePage />} />
@@ -29,7 +29,7 @@ function App() {
             <Route path="/suggestion/profile" element={<SuggestionPage />} />
           </Routes>
         </Router>
-    </UserProfileProvider>
+    {/*</UserProfileProvider>*/}
       </TonConnectUIProvider>
   );
 }
