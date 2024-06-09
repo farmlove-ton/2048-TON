@@ -1,5 +1,6 @@
 import { ChangeEvent, useState } from "react";
 import "./AddProfilePhotoPage.css";
+import { Button } from "../../components";
 
 const CreateProfilePage = () => {
   const [photo, setPhoto] = useState<File>();
@@ -16,7 +17,6 @@ const CreateProfilePage = () => {
   const renderPhoto = (photo: File) => {
     return <img src={URL.createObjectURL(photo)} alt="photo" />;
   };
-
   return (
     <form className="profilePage__form">
       <h1 className="profilePage__form-title">Add profile photos</h1>
@@ -32,7 +32,7 @@ const CreateProfilePage = () => {
       </div>
 
       <p className="profilePage__form-text">You must add 3 photos to continue</p>
-      <button className="btn" type="submit"><span>Continue</span></button>
+      <Button className="btn" type="submit"><span>Continue</span></Button>
     </form>
   );
 };

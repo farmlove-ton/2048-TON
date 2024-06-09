@@ -1,11 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import WebApp from "@twa-dev/sdk";
 
 import App from "./App.tsx";
 import "./index.css";
+import { initWebApp } from "./lib/telegram.ts";
 
-WebApp.ready();
+initWebApp();
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

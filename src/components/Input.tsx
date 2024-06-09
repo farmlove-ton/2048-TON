@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import { LegacyRef, forwardRef } from "react";
 
 type TProps = React.DetailedHTMLProps<
   React.InputHTMLAttributes<HTMLInputElement>,
@@ -7,13 +8,22 @@ type TProps = React.DetailedHTMLProps<
 
 const classes = {
   input:
-    "bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500",
+    "appearance-none bg-transparent block w-full border-b border-gray-200 py-3 px-4 leading-tight focus:outline-none focus:border-gray-500",
 };
 
-const Input = (props: TProps) => {
-  return (
-    <input className={classNames(classes.input, props.className)} {...props} />
-  );
-};
+const Input = forwardRef(
+  (
+    { className, ...props }: TProps,
+    ref: LegacyRef<HTMLInputElement> | undefined
+  ) => {
+    return (
+      <input
+        ref={ref}
+        className={classNames(classes.input, className)}
+        {...props}
+      />
+    );
+  }
+);
 
 export default Input;

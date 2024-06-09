@@ -1,8 +1,7 @@
 .profilePage__form {
     max-width: 375px;
-    padding: 163px 24px 50px;
+    padding: 163px 24px ;
     height: 100vh;
-    background-color: #000;
 }
 
 .profilePage__form img{
@@ -43,9 +42,7 @@ h1.profilePage__form-title {
 
 .btn {
     width: 100%;
-    padding-top: 16px;
-    padding-bottom: 16px;
-
+    margin-bottom: 50px;
 }
 
 .btn span {
