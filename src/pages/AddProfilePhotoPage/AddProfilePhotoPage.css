@@ -1,0 +1,52 @@
+.profilePage__form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 100px 24px 16px;
+    height: 100vh;
+}
+
+.profilePage__form img{
+    height: 135px;
+    width: 140px;
+    border-radius: 20px;
+}
+
+h1.profilePage__form-title {
+    line-height: 78px;
+    font-size: 24px;
+    color: #FFFFFF;
+}
+
+.profilePage__form-photo {
+    display: flex;
+    column-gap: 10px;
+    row-gap: 20px;
+}
+
+.profilePage__form-inputPhoto {
+    height: 135px;
+    width: 140px;
+    
+    color: transparent;
+    background: transparent url('./img/addphoto.png');
+}
+
+.profilePage__form-inputPhoto::-webkit-file-upload-button {
+    visibility: hidden;
+}
+
+.profilePage__form-text {
+    margin: auto 0 12px;
+
+    color: #B9C1BE;
+}
+
+.btn {
+    width: 100%;
+}
+
+.btn span {
+    line-height: 16px;
+    color: #000E08;
+}
