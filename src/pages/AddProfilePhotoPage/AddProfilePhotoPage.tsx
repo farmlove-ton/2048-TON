@@ -23,8 +23,7 @@ const CreateProfilePage = () => {
 
   return (
     <form 
-      className="profilePage__form"
-      onSubmit={navigate("/suggestion")}>
+      className="profilePage__form">
       <h1 className="profilePage__form-title">Add profile photos</h1>
       <div className="profilePage__form-photo">
         {!!photo && renderPhoto(photo)}
@@ -38,7 +37,7 @@ const CreateProfilePage = () => {
       </div>
 
       <p className="profilePage__form-text">You must add 3 photos to continue</p>
-      <Button  type="submit">Continue</Button>
+      <Button onSubmit={navigate("/suggestion")}  type="submit">Continue</Button>
     </form>
   );
 };
