@@ -1,6 +1,8 @@
 .profilePage__form {
-    max-width: 375px;
-    padding: 163px 24px ;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 100px 24px 16px;
     height: 100vh;
 }
 
@@ -35,14 +37,13 @@ h1.profilePage__form-title {
 }
 
 .profilePage__form-text {
-    margin: 256px 0 12px;
+    margin: auto 0 12px;
 
     color: #B9C1BE;
 }
 
 .btn {
     width: 100%;
-    margin-bottom: 50px;
 }
 
 .btn span {
