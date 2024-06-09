@@ -3,7 +3,7 @@ import "./AddProfilePhotoPage.css";
 import { Button } from "../../components";
 import { useNavigate } from "react-router-dom";
 import { showBackButton } from "../../lib/telegram";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { UserProfileContext } from "../../context/UserProfileContext";
 
 const CreateProfilePage = () => {
