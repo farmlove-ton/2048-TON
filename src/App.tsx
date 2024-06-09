@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { TonConnectUIProvider } from "@tonconnect/ui-react";
+import {THEME, TonConnectUIProvider} from "@tonconnect/ui-react";
 
 import {
   HomePage,
@@ -14,8 +14,11 @@ import { UserProfileProvider } from "./context/UserProfileContext";
 
 function App() {
   return (
+      <TonConnectUIProvider
+          manifestUrl="https://33f7839febb6546c.ngrok.app/tonconnect-manifest.json"
+          uiPreferences={{theme: THEME.DARK}}
+      >
     <UserProfileProvider>
-      <TonConnectUIProvider manifestUrl="https://1616-185-135-84-36.ngrok-free.app/manifest.json">
         <Router>
           <Routes>
             <Route path="/" element={<HomePage />} />
@@ -26,8 +29,8 @@ function App() {
             <Route path="/suggestion/profile" element={<SuggestionPage />} />
           </Routes>
         </Router>
-      </TonConnectUIProvider>
     </UserProfileProvider>
+      </TonConnectUIProvider>
   );
 }
 
