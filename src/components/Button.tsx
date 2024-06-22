@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import clsx from "clsx";
 
 type TProps = React.DetailedHTMLProps<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
@@ -25,7 +25,7 @@ const Button = ({
 }: TProps) => {
   return (
     <button
-      className={classNames(classes.button, variants[variant], className)}
+      className={clsx(classes.button, variants[variant], className)}
       type={type}
       {...props}
     />

@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import clsx from "clsx";
 
 interface ICheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: React.ReactNode;
@@ -24,7 +24,7 @@ const Checkbox = ({
   isError,
   ...rest
 }: ICheckboxProps) => {
-  const classname = classNames(
+  const classname = clsx(
     classes.checkbox,
     className,
     !!isError && classes.error

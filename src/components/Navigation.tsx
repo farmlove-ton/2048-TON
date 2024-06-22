@@ -4,7 +4,7 @@ import {
   HomeIcon,
   UserCircleIcon,
 } from "@heroicons/react/24/outline";
-import classNames from "classnames";
+import clsx from "clsx";
 import { Link, useLocation } from "react-router-dom";
 
 interface IIcon {
@@ -51,7 +51,7 @@ const Icon = (props: { icon: IIcon; selected: boolean }) => {
   return (
     <Link to={path}>
       <div
-        className={classNames(
+        className={clsx(
           classes.icon,
           selected ? classes.selected : classes.notSelected
         )}

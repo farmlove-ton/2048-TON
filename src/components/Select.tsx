@@ -5,7 +5,7 @@ import {
   ListboxOption,
 } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/16/solid";
-import classNames from "classnames";
+import clsx from "clsx";
 import { forwardRef } from "react";
 
 interface IOption<T> {
@@ -64,7 +64,7 @@ const Select = <T extends string>(
               key={value}
               value={value}
               className={({ selected, focus }) =>
-                classNames(
+                clsx(
                   classes.option,
                   selected || focus
                     ? classes.optionActive

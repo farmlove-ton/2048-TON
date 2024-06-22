@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import clsx from "clsx";
 
 interface IProps {
   isSelected?: boolean;
@@ -13,7 +13,7 @@ const classes = {
 const Tab = ({ isSelected }: IProps) => {
   return (
     <div
-      className={classNames(
+      className={clsx(
         classes.default,
         isSelected ? classes.selected : classes.notSelected
       )}
