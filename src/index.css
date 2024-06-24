@@ -33,3 +33,28 @@ body {
     color: #747bff;
   }
 } */
+
+.slider {
+  -webkit-appearance: none; /* Override default CSS styles */
+  appearance: none;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px; /* Adjust the size */
+  height: 24px; /* Adjust the size */
+  background: #1a1a1a; /* Color */
+  cursor: pointer;
+  border: 0.75px solid white;
+  border-radius: 50%;
+}
+
+.slider::-moz-range-thumb {
+  width: 24px; /* Adjust the size */
+  height: 24px; /* Adjust the size */
+  background: #1a1a1a; /* Color */
+  cursor: pointer;
+  border: 0.75px solid white;
+  border-radius: 50%;
+}

@@ -1,16 +1,24 @@
 import { useContext, useEffect } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { TonConnectButton } from "@tonconnect/ui-react";
+// import { TonConnectButton } from "@tonconnect/ui-react";
 
-import { Button, Input, Tab } from "../../components";
+import {
+  BodyTextThin,
+  Button,
+  Input,
+  Slider,
+  Tab,
+  Title,
+  WithLabel,
+  RadioGroup,
+} from "../../components";
 import { showBackButton } from "../../lib/telegram";
-import Select from "../../components/Select";
 import { UserProfileContext } from "../../context/UserProfileContext";
 
 interface IFormInput {
   name: string;
-  description: string;
+  surname: string;
   age: number;
   gender: string;
 }
@@ -21,8 +29,11 @@ const CreateProfilePage = () => {
   const { register, control, handleSubmit } = useForm<IFormInput>({
     defaultValues: {
       name: userProfile?.name || "",
+      age: 25,
+      gender: "male",
     },
   });
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -48,35 +59,52 @@ const CreateProfilePage = () => {
         </div>
 
         <div className="flex flex-col space-y-4">
-          <h2 className="text-2xl">Find your perfect match</h2>
-          <div className="flex flex-col space-y-2">
-            <Input {...register("name")} placeholder="Name" />
-            <Input
-              {...register("age")}
-              placeholder="Enter your age"
-              type="number"
-            />
-            <Controller
-              name="gender"
-              control={control}
-              render={({ field }) => (
-                <Select
-                  placeholder="Gender"
-                  {...field}
-                  options={[
-                    { value: "male", label: "Male" },
-                    { value: "female", label: "Female" },
-                  ]}
-                />
-              )}
-            />
+          <Title>Let’s set up your profile! What is your name?</Title>
+          <BodyTextThin>This is how you will appear in farmlove.</BodyTextThin>
+
+          <div className="flex flex-col space-y-4">
+            <WithLabel label="Enter your name">
+              <Input {...register("name")} placeholder="Name" />
+            </WithLabel>
+
+            <WithLabel label="Enter your surname">
+              <Input {...register("surname")} placeholder="Surname" />
+            </WithLabel>
+
+            <WithLabel label="Your age">
+              <Controller
+                name="age"
+                control={control}
+                render={({ field }) => <Slider {...field} min={18} max={120} />}
+              />
+            </WithLabel>
+
+            <WithLabel
+              direction="row"
+              className="justify-between"
+              label="Gender:"
+            >
+              <Controller
+                name="gender"
+                control={control}
+                render={({ field }) => (
+                  <RadioGroup
+                    {...field}
+                    options={[
+                      { label: "Male", value: "male" },
+                      { label: "Female", value: "female" },
+                    ]}
+                  />
+                )}
+              />
+            </WithLabel>
           </div>
         </div>
       </div>
 
-      <footer style={{ display: "flex", justifyContent: "center" }}>
+      {/* <footer style={{ display: "flex", justifyContent: "center" }}>
         <TonConnectButton />
-      </footer>
+      </footer> */}
       <Button type="submit">Continue</Button>
     </form>
   );
