@@ -25,8 +25,8 @@ const TellUsMorePage = () => {
   const { register, handleSubmit, control } = useForm<IFormInput>({
     defaultValues: {
       range: {
-        from: 18,
-        to: 24,
+        from: 20,
+        to: 30,
       },
       likeToSeeMen: false,
       likeToSeeWomen: false,
@@ -84,7 +84,7 @@ const TellUsMorePage = () => {
                 name="range"
                 control={control}
                 render={({ field }) => (
-                  <NumberRange min={18} max={120} {...field} />
+                  <NumberRange min={18} max={100} {...field} />
                 )}
               />
             </div>

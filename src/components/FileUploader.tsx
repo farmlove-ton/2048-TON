@@ -47,7 +47,7 @@ const FileUploader = forwardRef<HTMLInputElement, TProps>(
       <div className="w-full h-full">
         <div
           onClick={handleClick}
-          className="relative flex items-center justify-center w-full h-full border border-white rounded-3xl cursor-pointer"
+          className="relative flex items-center justify-center w-full h-full border border-white border-opacity-25 rounded-3xl cursor-pointer"
         >
           <PlusIcon className="w-6 h-6 text-white" />
         </div>

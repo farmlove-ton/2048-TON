@@ -51,8 +51,8 @@ const CreateProfilePage = () => {
       <div className="space-y-8">
         <div className="flex justify-between items-center space-x-2">
           <Tab />
-          <Tab isSelected />
           <Tab />
+          <Tab isSelected />
         </div>
 
         <div className="flex flex-col space-y-4">
