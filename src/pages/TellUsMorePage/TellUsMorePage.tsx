@@ -1,19 +1,37 @@
 import { useContext, useEffect } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
-import { Button, Input, Tab } from "../../components";
+import {
+  BodyTextThin,
+  Button,
+  NumberRange,
+  OutlineCheckbox,
+  Tab,
+  Title,
+} from "../../components";
 import { showBackButton } from "../../lib/telegram";
 import { UserProfileContext } from "../../context/UserProfileContext";
 
 interface IFormInput {
-  bio: string;
+  range: { from: number; to: number };
+  likeToSeeMen: boolean;
+  likeToSeeWomen: boolean;
 }
 
 const TellUsMorePage = () => {
   const { userProfile, setUserProfile } = useContext(UserProfileContext);
 
-  const { register, handleSubmit } = useForm<IFormInput>({});
+  const { register, handleSubmit, control } = useForm<IFormInput>({
+    defaultValues: {
+      range: {
+        from: 18,
+        to: 24,
+      },
+      likeToSeeMen: false,
+      likeToSeeWomen: false,
+    },
+  });
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -39,9 +57,37 @@ const TellUsMorePage = () => {
         </div>
 
         <div className="flex flex-col space-y-4">
-          <h2 className="text-2xl">Tell us more about you</h2>
-          <div className="flex flex-col space-y-2">
-            <Input {...register("bio")} placeholder="About you" />
+          <Title>Who would you like to see?</Title>
+          <BodyTextThin>
+            We want to make sure we find the right people for you. You can
+            always update this later.
+          </BodyTextThin>
+
+          <OutlineCheckbox
+            {...register("likeToSeeMen")}
+            label="I’d like to see men"
+          />
+          <OutlineCheckbox
+            {...register("likeToSeeWomen")}
+            label="I’d like to see women"
+          />
+
+          <div className="flex flex-col space-y-4">
+            <Title>Age range</Title>
+            <BodyTextThin>
+              We want to make sure we find the right people for you. You can
+              always update this later.
+            </BodyTextThin>
+
+            <div className="pt-4">
+              <Controller
+                name="range"
+                control={control}
+                render={({ field }) => (
+                  <NumberRange min={18} max={120} {...field} />
+                )}
+              />
+            </div>
           </div>
         </div>
       </div>

@@ -62,43 +62,41 @@ const CreateProfilePage = () => {
           <Title>Let’s set up your profile! What is your name?</Title>
           <BodyTextThin>This is how you will appear in farmlove.</BodyTextThin>
 
-          <div className="flex flex-col space-y-4">
-            <WithLabel label="Enter your name">
-              <Input {...register("name")} placeholder="Name" />
-            </WithLabel>
+          <WithLabel label="Enter your name">
+            <Input {...register("name")} placeholder="Name" />
+          </WithLabel>
 
-            <WithLabel label="Enter your surname">
-              <Input {...register("surname")} placeholder="Surname" />
-            </WithLabel>
+          <WithLabel label="Enter your surname">
+            <Input {...register("surname")} placeholder="Surname" />
+          </WithLabel>
 
-            <WithLabel label="Your age">
-              <Controller
-                name="age"
-                control={control}
-                render={({ field }) => <Slider {...field} min={18} max={120} />}
-              />
-            </WithLabel>
+          <WithLabel label="Your age">
+            <Controller
+              name="age"
+              control={control}
+              render={({ field }) => <Slider {...field} min={18} max={120} />}
+            />
+          </WithLabel>
 
-            <WithLabel
-              direction="row"
-              className="justify-between"
-              label="Gender:"
-            >
-              <Controller
-                name="gender"
-                control={control}
-                render={({ field }) => (
-                  <RadioGroup
-                    {...field}
-                    options={[
-                      { label: "Male", value: "male" },
-                      { label: "Female", value: "female" },
-                    ]}
-                  />
-                )}
-              />
-            </WithLabel>
-          </div>
+          <WithLabel
+            direction="row"
+            className="justify-between"
+            label="Gender:"
+          >
+            <Controller
+              name="gender"
+              control={control}
+              render={({ field }) => (
+                <RadioGroup
+                  {...field}
+                  options={[
+                    { label: "Male", value: "male" },
+                    { label: "Female", value: "female" },
+                  ]}
+                />
+              )}
+            />
+          </WithLabel>
         </div>
       </div>
 

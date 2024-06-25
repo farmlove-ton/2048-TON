@@ -6,4 +6,6 @@ export { default as Navigation } from "./Navigation";
 export { default as WithLabel } from "./WithLabel";
 export { default as Slider } from "./Slider";
 export { default as RadioGroup } from "./RadioGroup";
+export { default as NumberRange } from "./NumberRange";
+export { default as OutlineCheckbox } from "./OutlineCheckbox";
 export * from "./Text";

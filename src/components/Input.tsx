@@ -8,7 +8,7 @@ type TProps = React.DetailedHTMLProps<
 
 const classes = {
   input:
-    "appearance-none bg-transparent block w-full rounded-2xl border border-gray-200 py-3 px-4 leading-tight focus:outline-none focus:border-gray-500",
+    "appearance-none bg-transparent block w-full rounded-2xl border border-[#E2DAEC] border-opacity-25 p-4",
 };
 
 const Input = forwardRef(
