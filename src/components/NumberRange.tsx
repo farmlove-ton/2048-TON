@@ -1,4 +1,5 @@
 import React from "react";
+import { Range, getTrackBackground } from "react-range";
 
 interface RangeProps {
   min: number;
@@ -15,52 +16,65 @@ const NumberRange: React.FC<RangeProps> = ({
   value,
   onChange,
 }) => {
-  const handleRangeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = Number(e.target.value);
-    if (Math.abs(newValue - value.from) < Math.abs(newValue - value.to)) {
-      onChange({ from: Math.min(newValue, value.to - step), to: value.to });
-    } else {
-      onChange({ from: value.from, to: Math.max(newValue, value.from + step) });
-    }
-  };
-
-  const getPercentage = (val: number) => {
-    return ((val - min) / (max - min)) * 100;
+  const handleChange = (values: number[]) => {
+    onChange({ from: values[0], to: values[1] });
   };
 
   return (
     <div className="w-full relative">
-      <span className="absolute -top-8 right-0">
+      <span className="absolute -top-6 right-0">
         {value.from} - {value.to}
       </span>
-
-      <div className="absolute w-full h-1 bg-[#8E8E8E] rounded-lg" />
-      <div
-        className="absolute h-1 bg-white rounded-lg"
-        style={{
-          left: `${getPercentage(value.from)}%`,
-          right: `${100 - getPercentage(value.to)}%`,
-        }}
-      />
-      <input
-        type="range"
-        className="slider absolute w-full h-1 bg-transparent appearance-none pointer-events-auto"
+      <Range
+        values={[value.from, value.to]}
+        step={step}
         min={min}
         max={max}
-        step={step}
-        value={value.from}
-        onChange={handleRangeChange}
-        style={{ zIndex: 2 }}
-      />
-      <input
-        type="range"
-        className="slider absolute w-full h-1 bg-transparent appearance-none pointer-events-auto"
-        min={min}
-        max={max}
-        step={step}
-        value={value.to}
-        onChange={handleRangeChange}
-        style={{ zIndex: 1 }}
+        onChange={handleChange}
+        renderTrack={({ props, children }) => (
+          <div
+            onMouseDown={props.onMouseDown}
+            onTouchStart={props.onTouchStart}
+            style={{
+              ...props.style,
+              height: "24px",
+              display: "flex",
+              width: "100%",
+            }}
+          >
+            <div
+              ref={props.ref}
+              style={{
+                height: "1px",
+                width: "100%",
+                borderRadius: "4px",
+                background: getTrackBackground({
+                  values: [value.from, value.to],
+                  colors: ["#8E8E8E", "#FFFFFF", "#8E8E8E"],
+                  min: min,
+                  max: max,
+                }),
+                alignSelf: "center",
+              }}
+            >
+              {children}
+            </div>
+          </div>
+        )}
+        renderThumb={({ props }) => (
+          <div
+            {...props}
+            style={{
+              ...props.style,
+              height: "24px",
+              width: "24px",
+              background: "#1a1a1a",
+              cursor: "pointer",
+              border: "0.75px solid white",
+              borderRadius: "50%",
+            }}
+          ></div>
+        )}
       />
     </div>
   );

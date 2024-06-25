@@ -1,10 +1,16 @@
 import clsx from "clsx";
 
-interface ICheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
+type TProps = Omit<
+  React.DetailedHTMLProps<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    HTMLInputElement
+  >,
+  "type"
+> & {
   label?: React.ReactNode;
   isError?: boolean;
   required?: boolean;
-}
+};
 
 const classes = {
   wrapper: "flex items-center space-x-2.5",
@@ -23,7 +29,7 @@ const Checkbox = ({
   className,
   isError,
   ...rest
-}: ICheckboxProps) => {
+}: TProps) => {
   const classname = clsx(
     classes.checkbox,
     className,
@@ -33,13 +39,13 @@ const Checkbox = ({
   return (
     <div className={classes.wrapper}>
       <input
+        {...rest}
         id={name}
         name={name}
         type="checkbox"
         checked={value as unknown as boolean}
         className={classname}
         required={required}
-        {...rest}
       />
       <label aria-required={required} htmlFor={name} className={classes.label}>
         {label}

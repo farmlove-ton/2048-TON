@@ -1,28 +1,27 @@
 import clsx from "clsx";
 import { LegacyRef, forwardRef } from "react";
 
-interface IProps
-  extends Omit<
-    React.DetailedHTMLProps<
-      React.InputHTMLAttributes<HTMLInputElement>,
-      HTMLInputElement
-    >,
-    "type"
-  > {
+type TProps = Omit<
+  React.DetailedHTMLProps<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    HTMLInputElement
+  >,
+  "type"
+> & {
   value?: number;
-}
+};
 
 const Slider = forwardRef(
   (
-    { className, value, ...props }: IProps,
+    { className, value, ...props }: TProps,
     ref: LegacyRef<HTMLInputElement> | undefined
   ) => {
     return (
       <div className="relative">
         <input
+          {...props}
           ref={ref}
           type="range"
-          {...props}
           value={value}
           className={clsx(
             className,
