@@ -1,7 +1,6 @@
 import { useContext, useEffect } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-// import { TonConnectButton } from "@tonconnect/ui-react";
 
 import {
   BodyTextThin,
@@ -17,10 +16,10 @@ import { showBackButton } from "../../lib/telegram";
 import { UserProfileContext } from "../../context/UserProfileContext";
 
 interface IFormInput {
-  name: string;
-  surname: string;
+  firstName: string;
+  lastName: string;
   age: number;
-  gender: string;
+  sex: string;
 }
 
 const CreateProfilePage = () => {
@@ -28,9 +27,10 @@ const CreateProfilePage = () => {
 
   const { register, control, handleSubmit } = useForm<IFormInput>({
     defaultValues: {
-      name: userProfile?.name || "",
-      age: 25,
-      gender: "male",
+      firstName: userProfile.firstName,
+      lastName: userProfile.lastName,
+      age: userProfile.age,
+      sex: userProfile.sex,
     },
   });
 
@@ -63,11 +63,11 @@ const CreateProfilePage = () => {
           <BodyTextThin>This is how you will appear in farmlove.</BodyTextThin>
 
           <WithLabel label="Enter your name">
-            <Input {...register("name")} placeholder="Name" />
+            <Input {...register("firstName")} placeholder="Name" />
           </WithLabel>
 
           <WithLabel label="Enter your surname">
-            <Input {...register("surname")} placeholder="Surname" />
+            <Input {...register("lastName")} placeholder="Surname" />
           </WithLabel>
 
           <WithLabel label="Your age">
@@ -84,7 +84,7 @@ const CreateProfilePage = () => {
             label="Gender:"
           >
             <Controller
-              name="gender"
+              name="sex"
               control={control}
               render={({ field }) => (
                 <RadioGroup
@@ -100,9 +100,6 @@ const CreateProfilePage = () => {
         </div>
       </div>
 
-      {/* <footer style={{ display: "flex", justifyContent: "center" }}>
-        <TonConnectButton />
-      </footer> */}
       <Button type="submit">Continue</Button>
     </form>
   );

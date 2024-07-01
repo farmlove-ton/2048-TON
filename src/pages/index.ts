@@ -1,5 +1,7 @@
 export * from "./CreateProfilePage";
 export * from "./TellUsMorePage";
 export * from "./SuggestionPage";
-export { default as HomePage } from "./HomePage";
+export * from "./ConnectWalletPage";
+export * from "./HomePage";
+export { default as InitialPage } from "./InitialPage";
 export { default as AddProfilePhotoPage } from "./AddProfilePhotoPage/AddProfilePhotoPage";

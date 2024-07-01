@@ -15,16 +15,17 @@ import { UserProfileContext } from "../../context/UserProfileContext";
 
 interface IFormInput {
   photos: File[];
-  info: string;
+  bio: string;
 }
 
 const CreateProfilePage = () => {
-  const { userProfile, setUserProfile } = useContext(UserProfileContext);
+  const { userProfile, setUserProfile, registerUser } =
+    useContext(UserProfileContext);
 
   const { register, control, handleSubmit, watch } = useForm<IFormInput>({
     defaultValues: {
       photos: [],
-      info: "",
+      bio: userProfile.bio,
     },
   });
 
@@ -37,10 +38,15 @@ const CreateProfilePage = () => {
     showBackButton();
   }, []);
 
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    setUserProfile({ ...userProfile, ...data });
+  const onSkip = async () => {
+    await registerUser();
+    navigate("/home");
+  };
 
-    navigate("/suggestion");
+  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+    setUserProfile({ ...userProfile, ...data });
+    await registerUser();
+    navigate("/home");
   };
 
   return (
@@ -55,7 +61,7 @@ const CreateProfilePage = () => {
           <Tab isSelected />
         </div>
 
-        <div className="flex flex-col space-y-4">
+        <div className="flex flex-col space-y-2">
           <Title>Choose your photos</Title>
           <BodyTextThin>
             That's how others will see you. You can always update them later.
@@ -77,12 +83,18 @@ const CreateProfilePage = () => {
 
           <Textarea
             className="resize-none h-24"
-            {...register("info")}
+            {...register("bio")}
             placeholder="Maximum 140 symbols"
           />
         </div>
       </div>
-      <Button type="submit">Continue</Button>
+
+      <div className="flex flex-col space-y-2">
+        <Button type="submit">Continue</Button>
+        <Button variant="text" onClick={onSkip}>
+          Skip
+        </Button>
+      </div>
     </form>
   );
 };
