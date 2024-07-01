@@ -1,6 +1,6 @@
 import { CheckCircleIcon, CircleStackIcon } from "@heroicons/react/24/outline";
 
-import { Button } from "../../components";
+import { Button, Spinner } from "../../components";
 import Navigation from "../../components/Navigation";
 import { useAuthenticatedUser } from "../../hooks/useAuthenticatedUser";
 import { fetchSuggestion } from "../../api/suggestionService";
@@ -39,7 +39,9 @@ const SuggestionPage = () => {
   };
 
   if (!isFetched) {
-    return "Loading...";
+    <div className="w-full h-full flex items-center justify-center">
+      <Spinner />
+    </div>;
   }
 
   if (!data) {

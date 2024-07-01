@@ -20,5 +20,17 @@ export const fetchUser = async (userId: number): Promise<User> => {
 };
 
 export const createUser = async (user: User): Promise<ApiResponse<User>> => {
-  return post<ApiResponse<User>>(`/user`, user);
+  return post<ApiResponse<User>>(`/user`, null, { params: user });
+};
+
+export const uploadPhoto = async (props: {
+  userId: number;
+  formData: FormData;
+}): Promise<string> => {
+  return post<string>("/user/${userId}/photo", props.formData, {
+    params: { userId: props.userId },
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 };

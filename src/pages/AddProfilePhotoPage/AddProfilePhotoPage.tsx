@@ -22,15 +22,19 @@ const CreateProfilePage = () => {
   const { userProfile, setUserProfile, registerUser } =
     useContext(UserProfileContext);
 
-  const { register, control, handleSubmit, watch } = useForm<IFormInput>({
-    defaultValues: {
-      photos: [],
-      bio: userProfile.bio,
-    },
-  });
+  const { register, control, handleSubmit, watch, setValue } =
+    useForm<IFormInput>({
+      defaultValues: {
+        photos: [],
+        bio: userProfile.bio,
+      },
+    });
+
+  const unsetPhoto = () => {
+    setValue("photos", []);
+  };
 
   const photos = watch("photos");
-  console.log(photos);
 
   const navigate = useNavigate();
 
@@ -39,13 +43,13 @@ const CreateProfilePage = () => {
   }, []);
 
   const onSkip = async () => {
-    await registerUser();
+    await registerUser([]);
     navigate("/home");
   };
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     setUserProfile({ ...userProfile, ...data });
-    await registerUser();
+    await registerUser(data.photos);
     navigate("/home");
   };
 
@@ -67,16 +71,27 @@ const CreateProfilePage = () => {
             That's how others will see you. You can always update them later.
           </BodyTextThin>
 
-          {/* {photos.map((photo) => (
-            <img src={URL.createObjectURL(photo)} alt="photo" />
-          ))} */}
-
           <div className="mx-auto w-44 h-48">
-            <Controller
-              name="photos"
-              control={control}
-              render={({ field }) => <FileUploader {...field} />}
-            />
+            {photos.length ? (
+              <div className="relative w-full h-full">
+                <div className="absolute bottom-2 left-2">
+                  <Button onClick={unsetPhoto} className="shadow-md">
+                    Unset
+                  </Button>
+                </div>
+                <img
+                  className="w-full h-full object-cover"
+                  src={URL.createObjectURL(photos[0])}
+                  alt="photo"
+                />
+              </div>
+            ) : (
+              <Controller
+                name="photos"
+                control={control}
+                render={({ field }) => <FileUploader {...field} />}
+              />
+            )}
           </div>
 
           <Title>Write some info about you</Title>

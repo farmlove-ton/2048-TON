@@ -15,4 +15,5 @@ export { default as Logo } from "./Logo";
 export { default as CircleImage } from "./CircleImage";
 export { default as ProgressBar } from "./ProgressBar";
 export { default as ProtectedRoute } from "./ProtectedRoute";
+export { default as Spinner } from "./Spinner";
 export * from "./Text";

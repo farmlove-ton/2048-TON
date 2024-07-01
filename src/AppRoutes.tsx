@@ -10,7 +10,7 @@ import {
   HomePage,
 } from "./pages";
 import { UserContext } from "./context/UserContext";
-import { ProtectedRoute } from "./components";
+import { ProtectedRoute, Spinner } from "./components";
 import PageLayout from "./layouts/PageLayout";
 
 const AppRoutes = () => {
@@ -21,7 +21,11 @@ const AppRoutes = () => {
   const isLoading = !isFetched;
 
   if (isLoading) {
-    return "Loading...";
+    return (
+      <div className="w-full h-full flex items-center justify-center">
+        <Spinner />
+      </div>
+    );
   }
 
   return (

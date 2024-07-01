@@ -2,7 +2,7 @@ import { createContext, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { getTgUser } from "../lib/adapter";
-import { createUser } from "../api/userService";
+import { createUser, uploadPhoto } from "../api/userService";
 
 interface UserProfile {
   telegramId: number;
@@ -20,7 +20,7 @@ interface UserProfile {
 interface UserProfileContextType {
   userProfile: UserProfile;
   setUserProfile: (userProfile: UserProfile) => void;
-  registerUser: () => Promise<void>;
+  registerUser: (photos: File[]) => Promise<void>;
 }
 
 const UserProfileContext = createContext<UserProfileContextType>({
@@ -54,7 +54,7 @@ const UserProfileProvider = ({ children }: IProps) => {
   const queryClient = useQueryClient();
 
   const [userProfile, setUserProfile] = useState<UserProfile>({
-    telegramId: tgUser?.id,
+    telegramId: tgUser.id,
     chatId: "someid",
     username: tgUser.username || "",
     firstName: tgUser?.firstName || "",
@@ -68,13 +68,42 @@ const UserProfileProvider = ({ children }: IProps) => {
 
   const registerUserMutation = useMutation({
     mutationFn: createUser,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["user"] });
-    },
   });
 
-  const registerUser = async () => {
-    await registerUserMutation.mutateAsync(userProfile);
+  const refetchUser = () => {
+    queryClient.invalidateQueries({ queryKey: ["user"] });
+    queryClient.refetchQueries({ queryKey: ["user"] });
+  };
+
+  const uploadPhotoMutation = useMutation({
+    mutationFn: uploadPhoto,
+  });
+
+  const registerUser = async (photos: File[]) => {
+    await registerUserMutation.mutateAsync({
+      telegramId: userProfile.telegramId,
+      chatId: userProfile.chatId,
+      username: userProfile.username,
+      firstName: userProfile.firstName,
+      lastName: userProfile.lastName,
+      age: userProfile.age,
+      sex: userProfile.sex,
+      love: userProfile.love,
+      bio: userProfile.bio,
+      photoUrl: userProfile.photoUrl,
+    });
+
+    if (photos.length) {
+      const formData = new FormData();
+      formData.append("file", photos[0]);
+
+      await uploadPhotoMutation.mutateAsync({
+        userId: userProfile.telegramId,
+        formData,
+      });
+    }
+
+    refetchUser();
   };
 
   return (
