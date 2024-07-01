@@ -15,31 +15,31 @@ interface IIcon {
 
 const items: IIcon[] = [
   {
-    path: "/suggestion",
+    path: "/home",
     Icon: HomeIcon,
     name: "Home",
   },
   {
-    path: "/chats",
+    path: "/task",
     Icon: ChatBubbleOvalLeftEllipsisIcon,
-    name: "Chats",
+    name: "Task",
   },
   {
-    path: "/farm-points",
+    path: "/invite",
     Icon: HeartIcon,
-    name: "Farm points",
+    name: "Invite",
   },
   {
-    path: "/profile",
+    path: "/boost",
     Icon: UserCircleIcon,
-    name: "Profile",
+    name: "Boost",
   },
 ];
 
 const classes = {
   icon: "flex flex-col px-4 py-2 items-center justify-center rounded-md cursor-pointer",
-  selected: "border border-[#43116A] text-[#43116A]",
-  notSelected: "hover:text-[#43116A] ",
+  selected: "border border-[#9D62D9] text-[#9D62D9]",
+  notSelected: "hover:text-[#9D62D9] ",
 };
 
 const Icon = (props: { icon: IIcon; selected: boolean }) => {
@@ -49,7 +49,7 @@ const Icon = (props: { icon: IIcon; selected: boolean }) => {
   } = props;
 
   return (
-    <Link to={path}>
+    <Link to={path} className="w-24">
       <div
         className={clsx(
           classes.icon,
@@ -71,7 +71,7 @@ const Navigation = () => {
   );
 
   return (
-    <div className="flex space-x-1  p-3 items-center justify-center bg-[#0B0B0E] rounded-t-md">
+    <div className="flex w-full space-x-1 p-3 items-center justify-between bg-transparent rounded-t-md">
       {items.map((item) => (
         <Icon
           key={item.path}
