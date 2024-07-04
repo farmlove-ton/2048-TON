@@ -5,6 +5,7 @@ import {
   PencilIcon,
   TicketIcon,
 } from "@heroicons/react/24/outline";
+import { useMutation } from "@tanstack/react-query";
 
 import {
   Button,
@@ -17,9 +18,16 @@ import {
 import PageLayout from "../../layouts/PageLayout";
 import { useAuthenticatedUser } from "../../hooks/useAuthenticatedUser";
 import { Link } from "react-router-dom";
+import { farm } from "../../api/farmService";
 
 const HomePage = () => {
   const user = useAuthenticatedUser();
+
+  const farmMutation = useMutation({ mutationFn: farm });
+
+  const handleFarm = () => {
+    farmMutation.mutate(user.telegramId);
+  };
 
   return (
     <PageLayout>
@@ -44,7 +52,11 @@ const HomePage = () => {
 
         <div className="mt-2 space-y-1">
           <SmallText>Your farming</SmallText>
-          <ProgressBar initialTimeLeft={7000} totalTime={18920} />
+          <ProgressBar
+            initialTimeLeft={7000}
+            totalTime={18920}
+            onClick={handleFarm}
+          />
         </div>
 
         <div className="flex space-x-2 mt-4">

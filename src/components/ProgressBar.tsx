@@ -5,11 +5,13 @@ import Logo from "./Logo";
 interface ProgressBarProps {
   totalTime: number; // total time in seconds
   initialTimeLeft: number; // initial time left in seconds
+  onClick: () => void;
 }
 
 const ProgressBar: React.FC<ProgressBarProps> = ({
   totalTime,
   initialTimeLeft,
+  onClick,
 }) => {
   const [timeLeft, setTimeLeft] = useState(initialTimeLeft);
   const [progress, setProgress] = useState(0);
@@ -45,10 +47,18 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
           width: `${progress}%`,
         }}
       ></div>
+
+      <div
+        className="absolute flex items-center backdrop-blur-xl w-fit px-4 py-2.5 rounded-full top-1/2 transform -translate-x-1/2 -translate-y-1/2 cursor-pointer text-nowrap"
+        style={{ left: `${progress}%` }}
+        onClick={onClick}
+      >
+        Take now
+      </div>
       <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
         <Logo width={64} height={16} />
       </div>
-      <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
+      <div className="absolute right-4 -top-5">
         <Caption className="text-[#FFFFFF99]">
           {Math.floor(timeLeft / 3600)
             .toString()
