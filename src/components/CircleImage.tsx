@@ -1,9 +1,11 @@
+import { memo } from "react";
+
 interface CircularImageProps {
   src: string;
   alt: string;
 }
 
-const CircularImage: React.FC<CircularImageProps> = ({ src, alt }) => {
+const CircleImage: React.FC<CircularImageProps> = memo(({ src, alt }) => {
   return (
     <img
       src={src}
@@ -11,6 +13,6 @@ const CircularImage: React.FC<CircularImageProps> = ({ src, alt }) => {
       className="w-full h-full rounded-full object-cover"
     />
   );
-};
+});
 
-export default CircularImage;
+export default CircleImage;
