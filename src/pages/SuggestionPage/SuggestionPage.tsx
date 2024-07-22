@@ -1,10 +1,11 @@
 import { CheckCircleIcon, CircleStackIcon } from "@heroicons/react/24/outline";
+import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
 import { Button, Spinner } from "../../components";
 import Navigation from "../../components/Navigation";
 import { useAuthenticatedUser } from "../../hooks/useAuthenticatedUser";
 import { fetchSuggestion } from "../../api/suggestionService";
-import { useQuery } from "@tanstack/react-query";
 import PageLayout from "../../layouts/PageLayout";
 
 const LovePoints = () => {
@@ -27,14 +28,24 @@ const Confirmed = () => {
 
 const SuggestionPage = () => {
   const user = useAuthenticatedUser();
+  const navigate = useNavigate();
 
   const { data, isFetched, refetch } = useQuery({
-    queryKey: ["user"],
+    queryKey: ["suggestion"],
     queryFn: () => fetchSuggestion(user.telegramId),
     retry: false,
   });
 
   const onNext = () => {
+    refetch();
+  };
+
+  const handleLike = () => {
+    if (!user.tickets) {
+      navigate("/home?noTickets=true");
+      return;
+    }
+
     refetch();
   };
 
@@ -76,7 +87,7 @@ const SuggestionPage = () => {
           <Button onClick={onNext} variant="contained" className="w-full p-1">
             Send points 🔥
           </Button>
-          <Button onClick={onNext} variant="outlined" className="w-full">
+          <Button onClick={handleLike} variant="outlined" className="w-full">
             Like
           </Button>
         </div>

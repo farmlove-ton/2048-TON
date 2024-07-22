@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {
   CheckCircleIcon,
   CircleStackIcon,
@@ -5,28 +6,55 @@ import {
   PencilIcon,
   TicketIcon,
 } from "@heroicons/react/24/outline";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
-import {
-  Button,
-  CircleImage,
-  Logo,
-  ProgressBar,
-  SmallText,
-  Title,
-} from "../../components";
+import { Button, CircleImage, Logo, SmallText, Title } from "../../components";
 import PageLayout from "../../layouts/PageLayout";
 import { useAuthenticatedUser } from "../../hooks/useAuthenticatedUser";
-import { Link } from "react-router-dom";
 import { farm } from "../../api/farmService";
+import { NoTicketsModal } from "../../components/Modals";
+import { useModal } from "../../hooks/useModal";
+import FarmBar from "../../components/FarmBar/FarmBar";
 
 const HomePage = () => {
   const user = useAuthenticatedUser();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const farmMutation = useMutation({ mutationFn: farm });
+  const hasNoTickets = searchParams.has("noTickets");
 
-  const handleFarm = () => {
+  const noTicketsModalProps = useModal({
+    initialOpen: hasNoTickets,
+  });
+
+  useEffect(() => {
+    if (hasNoTickets) {
+      const newSearchParams = new URLSearchParams(searchParams.toString());
+      newSearchParams.delete("noTickets");
+      setSearchParams(newSearchParams);
+    }
+  }, [hasNoTickets, searchParams, setSearchParams]);
+
+  const farmMutation = useMutation({
+    mutationFn: farm,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+    },
+  });
+
+  const handleFarm = async () => {
     farmMutation.mutate(user.telegramId);
+  };
+
+  const handleDiscover = () => {
+    if (!user.tickets) {
+      noTicketsModalProps.open();
+      return;
+    }
+
+    navigate("/suggestion");
   };
 
   return (
@@ -52,10 +80,13 @@ const HomePage = () => {
 
         <div className="mt-2 space-y-1">
           <SmallText>Your farming</SmallText>
-          <ProgressBar
-            initialTimeLeft={7000}
-            totalTime={18920}
-            onClick={handleFarm}
+          <FarmBar
+            onFarm={handleFarm}
+            farmCounter={user.farmCounter}
+            farmedAmount={user.farmedAmount}
+            maxCounter={user.maxCounter}
+            updatedUserTicketsAmount={user.updatedUserTicketsAmount}
+            timeToFull={user.timeToFull}
           />
         </div>
 
@@ -69,7 +100,7 @@ const HomePage = () => {
           >
             <TicketIcon className="size-6" />
             <SmallText>Tickets</SmallText>
-            <Title>7,430</Title>
+            <Title>{user.tickets}</Title>
           </div>
 
           <div
@@ -81,7 +112,7 @@ const HomePage = () => {
           >
             <CircleStackIcon className="size-6" />
             <SmallText>Points</SmallText>
-            <Title>7,430</Title>
+            <Title>{user.points}</Title>
           </div>
         </div>
 
@@ -94,13 +125,13 @@ const HomePage = () => {
         >
           <Title>Play boy</Title>
           <SmallText>This is how you will appear in farmlove.</SmallText>
-          <Link to="/suggestion" className="w-full mt-4">
-            <Button className="w-full" color="pink">
-              Discover
-            </Button>
-          </Link>
+          <Button onClick={handleDiscover} className="w-full mt-4" color="pink">
+            Discover
+          </Button>
         </div>
       </div>
+
+      <NoTicketsModal {...noTicketsModalProps} />
     </PageLayout>
   );
 };

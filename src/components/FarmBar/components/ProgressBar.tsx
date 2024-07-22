@@ -1,42 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { Caption } from "./Text";
-import Logo from "./Logo";
+import React from "react";
+import { Caption } from "../../Text";
 
 interface ProgressBarProps {
   totalTime: number; // total time in seconds
-  initialTimeLeft: number; // initial time left in seconds
+  timeLeft: number; // initial time left in seconds
   onClick: () => void;
 }
 
 const ProgressBar: React.FC<ProgressBarProps> = ({
   totalTime,
-  initialTimeLeft,
+  timeLeft,
   onClick,
 }) => {
-  const [timeLeft, setTimeLeft] = useState(initialTimeLeft);
-  const [progress, setProgress] = useState(0);
-
-  useEffect(() => {
-    setProgress(((totalTime - timeLeft) / totalTime) * 100);
-  }, [timeLeft, totalTime]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTimeLeft((prevTimeLeft) => {
-        if (prevTimeLeft <= 0) {
-          clearInterval(interval);
-          return 0;
-        }
-        return prevTimeLeft - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, []);
+  const progress = ((totalTime - timeLeft) / totalTime) * 100;
 
   return (
     <div
-      className="relative w-full rounded-xl h-10"
+      className="w-full rounded-xl h-10"
       style={{
         background: "linear-gradient(3deg, rgb(0 0 0 / 70%), rgb(0 0 0 / 10%))",
       }}
@@ -55,9 +35,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
       >
         Take now
       </div>
-      <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
-        <Logo width={64} height={16} />
-      </div>
+
       <div className="absolute right-4 -top-5">
         <Caption className="text-[#FFFFFF99]">
           {Math.floor(timeLeft / 3600)

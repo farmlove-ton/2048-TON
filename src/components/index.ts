@@ -13,7 +13,7 @@ export { default as Textarea } from "./Textarea";
 export { default as Camera } from "./Camera";
 export { default as Logo } from "./Logo";
 export { default as CircleImage } from "./CircleImage";
-export { default as ProgressBar } from "./ProgressBar";
 export { default as ProtectedRoute } from "./ProtectedRoute";
 export { default as Spinner } from "./Spinner";
 export * from "./Text";
+export * from "./FarmBar";

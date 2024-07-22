@@ -72,7 +72,6 @@ const UserProfileProvider = ({ children }: IProps) => {
 
   const refetchUser = () => {
     queryClient.invalidateQueries({ queryKey: ["user"] });
-    queryClient.refetchQueries({ queryKey: ["user"] });
   };
 
   const uploadPhotoMutation = useMutation({

@@ -1,6 +1,7 @@
 // src/api/userService.ts
 import { get, post } from "./apiService";
 import { ApiResponse } from "./types";
+import { enhanceResponse } from "./utils";
 
 interface User {
   telegramId: number;
@@ -15,9 +16,21 @@ interface User {
   photoUrl: string;
 }
 
-export const fetchUser = async (userId: number): Promise<User> => {
-  return get<User>(`/user/${userId}`);
-};
+export const fetchUser = enhanceResponse(
+  async (userId: number): Promise<User> => {
+    return get<User>(`/user/${userId}`);
+  },
+  (res) => ({
+    ...res,
+    tickets: 0,
+    farmCounter: 0.7,
+    farmedAmount: 3,
+    maxCounter: 5,
+    updatedUserTicketsAmount: 32,
+    timeToFull: 28800,
+    points: 7430,
+  })
+);
 
 export const createUser = async (user: User): Promise<ApiResponse<User>> => {
   return post<ApiResponse<User>>(`/user`, null, { params: user });

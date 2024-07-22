@@ -13,6 +13,14 @@ interface User {
   sex: string;
   love: number;
   photoUrl: string;
+
+  tickets: number;
+  points: number;
+  farmCounter: number;
+  farmedAmount: number;
+  maxCounter: number;
+  updatedUserTicketsAmount: number;
+  timeToFull: number;
 }
 
 interface UserContextType {
