@@ -20,3 +20,7 @@ export const hideBackButton = () => {
 export const getUserData = () => {
   return WebApp.initDataUnsafe.user;
 };
+
+export const openChat = (username: string) => {
+  return WebApp.openTelegramLink(`https://t.me/${username}`);
+};

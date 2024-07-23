@@ -9,6 +9,8 @@ import {
   SuggestionPage,
   HomePage,
   EditProfilePage,
+  LikesPage,
+  AdmirerPage,
 } from "./pages";
 import { UserContext } from "./context/UserContext";
 import { ProtectedRoute, Spinner } from "./components";
@@ -47,7 +49,8 @@ const AppRoutes = () => {
         <Route path="/home" element={<HomePage />} />
         <Route path="/edit-profile" element={<EditProfilePage />} />
         <Route path="/task" element={<PageLayout>Soon</PageLayout>} />
-        <Route path="/invite" element={<PageLayout>Soon</PageLayout>} />
+        <Route path="/likes" element={<LikesPage />} />
+        <Route path="/user/:telegramId" element={<AdmirerPage />} />
         <Route path="/boost" element={<PageLayout>Soon</PageLayout>} />
         <Route path="/suggestion" element={<SuggestionPage />} />
         <Route path="/suggestion/profile" element={<SuggestionPage />} />

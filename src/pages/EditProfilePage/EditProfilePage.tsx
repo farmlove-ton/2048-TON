@@ -159,7 +159,7 @@ const EditProfilePage = () => {
           </div>
         </div>
 
-        <Button className="mt-4" type="submit">
+        <Button className="my-4" type="submit">
           Save
         </Button>
       </form>

@@ -24,9 +24,12 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.5",
     "react-range": "^1.8.14",
-    "react-router-dom": "^6.23.1"
+    "react-router-dom": "^6.23.1",
+    "react-virtualized-auto-sizer": "^1.0.24",
+    "react-window": "^1.8.10"
   },
   "devDependencies": {
+    "@types/react-window": "^1.8.8",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@typescript-eslint/eslint-plugin": "^7.2.0",

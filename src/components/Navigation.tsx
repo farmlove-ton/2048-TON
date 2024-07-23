@@ -25,9 +25,9 @@ const items: IIcon[] = [
     name: "Task",
   },
   {
-    path: "/invite",
+    path: "/likes",
     Icon: HeartIcon,
-    name: "Invite",
+    name: "Likes",
   },
   {
     path: "/edit-profile",

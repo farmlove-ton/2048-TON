@@ -5,4 +5,6 @@ export * from "./ConnectWalletPage";
 export * from "./HomePage";
 export * from "./AddProfilePhotoPage";
 export * from "./EditProfilePage";
+export * from "./LikesPage";
+export * from "./AdmirerPage";
 export { default as InitialPage } from "./InitialPage";

@@ -22,7 +22,7 @@ export const fetchUser = enhanceResponse(
   },
   (res) => ({
     ...res,
-    tickets: 0,
+    tickets: 1,
     farmCounter: 0.7,
     farmedAmount: 3,
     maxCounter: 5,

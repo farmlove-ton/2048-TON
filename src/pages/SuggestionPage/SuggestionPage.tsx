@@ -50,9 +50,11 @@ const SuggestionPage = () => {
   };
 
   if (!isFetched) {
-    <div className="w-full h-full flex items-center justify-center">
-      <Spinner />
-    </div>;
+    return (
+      <div className="w-full h-full flex items-center justify-center">
+        <Spinner />
+      </div>
+    );
   }
 
   if (!data) {
