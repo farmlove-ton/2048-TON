@@ -62,13 +62,15 @@ const HomePage = () => {
       <Logo />
       <div className="relative flex flex-col">
         <div className="flex flex-col items-center">
-          <div className="relative w-24 h-24">
-            <div className="absolute cursor-pointer flex items-center justify-center size-6 border border-[#FFFFFF47] rounded-full bottom-2 -right-1">
-              <PencilIcon className="size-3" />
-            </div>
+          {user.photoUrl && (
+            <div className="relative w-24 h-24">
+              <div className="absolute cursor-pointer flex items-center justify-center size-6 border border-[#FFFFFF47] rounded-full bottom-2 -right-1">
+                <PencilIcon className="size-3" />
+              </div>
 
-            <CircleImage alt="avatar" src={user.photoUrl} />
-          </div>
+              <CircleImage alt="avatar" src={user.photoUrl} />
+            </div>
+          )}
 
           <div className="flex items-center space-x-1">
             <Title>{user.firstName}</Title>
