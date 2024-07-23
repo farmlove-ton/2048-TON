@@ -7,20 +7,20 @@ import { createUser, uploadPhoto } from "../api/userService";
 interface UserProfile {
   telegramId: number;
   chatId: string;
-  username: string;
+  username?: string;
   firstName: string;
-  lastName: string;
-  bio: string;
-  age: number;
-  sex: string;
-  love: number;
-  photoUrl: string;
+  lastName?: string;
+  bio?: string;
+  age?: number;
+  sex?: string;
+  love?: number;
+  photo?: File;
 }
 
 interface UserProfileContextType {
   userProfile: UserProfile;
   setUserProfile: (userProfile: UserProfile) => void;
-  registerUser: (photos: File[]) => Promise<void>;
+  registerUser: (userProfile: UserProfile) => Promise<void>;
 }
 
 const UserProfileContext = createContext<UserProfileContextType>({
@@ -34,7 +34,7 @@ const UserProfileContext = createContext<UserProfileContextType>({
     age: 0,
     sex: "",
     love: 0,
-    photoUrl: "",
+    photo: undefined,
   },
   setUserProfile: () => {},
   registerUser: () => new Promise(() => {}),
@@ -57,13 +57,13 @@ const UserProfileProvider = ({ children }: IProps) => {
     telegramId: tgUser.id,
     chatId: "someid",
     username: tgUser.username || "",
-    firstName: tgUser?.firstName || "",
+    firstName: tgUser.firstName,
     lastName: tgUser.lastName || "",
     age: 25,
     sex: "male",
     love: 0,
     bio: "",
-    photoUrl: "",
+    photo: undefined,
   });
 
   const registerUserMutation = useMutation({
@@ -78,26 +78,25 @@ const UserProfileProvider = ({ children }: IProps) => {
     mutationFn: uploadPhoto,
   });
 
-  const registerUser = async (photos: File[]) => {
+  const registerUser = async (profile: UserProfile) => {
     await registerUserMutation.mutateAsync({
-      telegramId: userProfile.telegramId,
-      chatId: userProfile.chatId,
-      username: userProfile.username,
-      firstName: userProfile.firstName,
-      lastName: userProfile.lastName,
-      age: userProfile.age,
-      sex: userProfile.sex,
-      love: userProfile.love,
-      bio: userProfile.bio,
-      photoUrl: userProfile.photoUrl,
+      telegramId: profile.telegramId,
+      chatId: profile.chatId,
+      username: profile.username,
+      firstName: profile.firstName,
+      lastName: profile.lastName,
+      age: profile.age,
+      sex: profile.sex,
+      love: profile.love,
+      bio: profile.bio,
     });
 
-    if (photos.length) {
+    if (profile.photo) {
       const formData = new FormData();
-      formData.append("file", photos[0]);
+      formData.append("file", profile.photo);
 
       await uploadPhotoMutation.mutateAsync({
-        userId: userProfile.telegramId,
+        userId: profile.telegramId,
         formData,
       });
     }

@@ -8,6 +8,7 @@ import {
   AddProfilePhotoPage,
   SuggestionPage,
   HomePage,
+  EditProfilePage,
 } from "./pages";
 import { UserContext } from "./context/UserContext";
 import { ProtectedRoute, Spinner } from "./components";
@@ -44,6 +45,7 @@ const AppRoutes = () => {
       <Route path="/photo-under-review" element={<PhotoUnderReviewPage />} /> */}
       <Route element={<ProtectedRoute redirectTo="/" isAllowed={isAuthed} />}>
         <Route path="/home" element={<HomePage />} />
+        <Route path="/edit-profile" element={<EditProfilePage />} />
         <Route path="/task" element={<PageLayout>Soon</PageLayout>} />
         <Route path="/invite" element={<PageLayout>Soon</PageLayout>} />
         <Route path="/boost" element={<PageLayout>Soon</PageLayout>} />

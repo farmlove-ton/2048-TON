@@ -6,14 +6,14 @@ import { enhanceResponse } from "./utils";
 interface User {
   telegramId: number;
   chatId: string;
-  username: string;
+  username?: string;
   firstName: string;
-  lastName: string;
-  bio: string;
-  age: number;
-  sex: string;
-  love: number;
-  photoUrl: string;
+  lastName?: string;
+  bio?: string;
+  age?: number;
+  sex?: string;
+  love?: number;
+  photoUrl?: string;
 }
 
 export const fetchUser = enhanceResponse(
@@ -32,7 +32,9 @@ export const fetchUser = enhanceResponse(
   })
 );
 
-export const createUser = async (user: User): Promise<ApiResponse<User>> => {
+export const createUser = async (
+  user: Partial<User>
+): Promise<ApiResponse<User>> => {
   return post<ApiResponse<User>>(`/user`, null, { params: user });
 };
 

@@ -5,14 +5,15 @@ import { getTgUser } from "../lib/adapter";
 
 interface User {
   telegramId: number;
-  username: string;
+  chatId: string;
+  username?: string;
   firstName: string;
-  lastName: string;
-  bio: string;
-  age: number;
-  sex: string;
-  love: number;
-  photoUrl: string;
+  lastName?: string;
+  bio?: string;
+  age?: number;
+  sex?: string;
+  love?: number;
+  photoUrl?: string;
 
   tickets: number;
   points: number;
