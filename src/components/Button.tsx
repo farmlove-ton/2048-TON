@@ -6,14 +6,18 @@ type TProps = React.DetailedHTMLProps<
 > & {
   color?: TColors;
   variant?: TVariants;
+  size?: TSize;
 };
 
 type TVariants = "text" | "outlined" | "contained";
 type TColors = "default" | "secondary" | "pink";
+type TSize = "small" | "normal";
 
 const classes = {
   button:
-    "rounded-xl px-4 py-2 text-base font-medium cursor-pointer transition-colors duration-200 focus:outline-none hover:opacity-90",
+    "rounded-2xl font-medium cursor-pointer transition-colors duration-200 focus:outline-none hover:opacity-90",
+  small: "text-xs py-1 px-4",
+  normal: "text-base py-2 px-4",
 };
 
 const colorClasses: Record<TVariants, Record<TColors, string>> = {
@@ -41,6 +45,7 @@ const variants: Record<TVariants, string> = {
 };
 
 const Button = ({
+  size = "normal",
   type = "button",
   variant = "contained",
   color = "default",
@@ -52,6 +57,7 @@ const Button = ({
       className={clsx(
         variants[variant],
         colorClasses[variant][color],
+        classes[size],
         className
       )}
       type={type}

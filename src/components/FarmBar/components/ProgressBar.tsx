@@ -1,52 +1,56 @@
-import React from "react";
 import { Caption } from "../../Text";
 
-interface ProgressBarProps {
-  totalTime: number; // total time in seconds
-  timeLeft: number; // initial time left in seconds
-  onClick: () => void;
+interface IProps {
+  progress: number;
 }
 
-const ProgressBar: React.FC<ProgressBarProps> = ({
-  totalTime,
-  timeLeft,
-  onClick,
-}) => {
-  const progress = ((totalTime - timeLeft) / totalTime) * 100;
+<circle
+  cx="50%"
+  cy="50%"
+  r="40%"
+  stroke="gray"
+  strokeWidth="10%"
+  fill="none"
+/>;
+
+const ProgressBar = ({ progress }: IProps) => {
+  const radius = 50; // Radius of the smaller (progress) circle
+  const strokeWidth = 2; // Stroke width of the progress circle
+  const largerRadius = radius + 10; // Radius of the larger (background) circle
+  const circumference = 2 * Math.PI * radius; // Circumference of the progress circle
+  const strokeDashoffset = circumference - (progress / 100) * circumference; // Calculate stroke offset based on progress
 
   return (
-    <div
-      className="w-full rounded-xl h-10"
-      style={{
-        background: "linear-gradient(3deg, rgb(0 0 0 / 70%), rgb(0 0 0 / 10%))",
-      }}
-    >
-      <div
-        className="h-10 rounded-xl bg-gradient-pink"
-        style={{
-          width: `${progress}%`,
-        }}
-      ></div>
-
-      <div
-        className="absolute flex items-center backdrop-blur-xl w-fit px-4 py-2.5 rounded-full top-1/2 transform -translate-x-1/2 -translate-y-1/2 cursor-pointer text-nowrap"
-        style={{ left: `${progress}%` }}
-        onClick={onClick}
+    <div className="relative">
+      <svg
+        className="w-full h-full"
+        viewBox={`0 0 ${largerRadius * 2} ${largerRadius * 2}`}
       >
-        Take now
-      </div>
-
-      <div className="absolute right-4 -top-5">
-        <Caption className="text-[#FFFFFF99]">
-          {Math.floor(timeLeft / 3600)
-            .toString()
-            .padStart(2, "0")}
-          :
-          {Math.floor((timeLeft % 3600) / 60)
-            .toString()
-            .padStart(2, "0")}
-          :{(timeLeft % 60).toString().padStart(2, "0")}
-        </Caption>
+        {/* Background circle */}
+        <circle
+          cx="50%"
+          cy="50%"
+          r={largerRadius - 1}
+          fill="none"
+          stroke="gray"
+          strokeOpacity="30%"
+          strokeWidth={strokeWidth}
+        />
+        {/* Progress circle */}
+        <circle
+          cx="50%"
+          cy="50%"
+          r={radius}
+          fill="none"
+          stroke="#6262D9" // Color of the progress
+          strokeWidth={strokeWidth}
+          strokeDasharray={circumference}
+          strokeDashoffset={strokeDashoffset}
+          transform={`rotate(-90 ${largerRadius} ${largerRadius})`} // Rotate to start progress from the top
+        />
+      </svg>
+      <div className="absolute inset-0 flex items-center justify-center">
+        <Caption>{progress}%</Caption>
       </div>
     </div>
   );

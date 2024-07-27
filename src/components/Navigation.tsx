@@ -30,7 +30,7 @@ const items: IIcon[] = [
     name: "Likes",
   },
   {
-    path: "/edit-profile",
+    path: "/boost",
     Icon: UserCircleIcon,
     name: "Boost",
   },

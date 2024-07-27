@@ -50,7 +50,7 @@ const AppRoutes = () => {
         <Route path="/edit-profile" element={<EditProfilePage />} />
         <Route path="/task" element={<PageLayout>Soon</PageLayout>} />
         <Route path="/likes" element={<LikesPage />} />
-        <Route path="/user/:telegramId" element={<AdmirerPage />} />
+        <Route path="/likes/:telegramId" element={<AdmirerPage />} />
         <Route path="/boost" element={<PageLayout>Soon</PageLayout>} />
         <Route path="/suggestion" element={<SuggestionPage />} />
         <Route path="/suggestion/profile" element={<SuggestionPage />} />

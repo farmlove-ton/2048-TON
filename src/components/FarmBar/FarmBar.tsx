@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
 import Button from "../Button";
+import { BodyText } from "../Text";
 import ProgressBar from "./components/ProgressBar";
-import { Subtitle } from "../Text";
+import { useFarmBar } from "./useFarmBar";
 
 interface IProps {
   onFarm: () => void;
@@ -18,44 +18,23 @@ export default function FarmBar({
   maxCounter,
   timeToFull,
 }: IProps) {
-  const percentageComplete = farmCounter / maxCounter;
-  const elapsedTime = timeToFull * percentageComplete;
-  const initialTimeLeft = Math.ceil(timeToFull - elapsedTime);
-
-  const [timeLeft, setTimeLeft] = useState(initialTimeLeft);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTimeLeft((prevTimeLeft) => {
-        if (prevTimeLeft <= 0) {
-          clearInterval(interval);
-          return 0;
-        }
-        return prevTimeLeft - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  if (!timeLeft) {
-    return (
-      <Button className="w-full" color="pink">
-        Get Reward
-      </Button>
-    );
-  }
+  const { progress, timeLeft } = useFarmBar({
+    farmCounter,
+    maxCounter,
+    timeToFull,
+  });
 
   return (
-    <div className="relative w-full">
-      <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
-        <Subtitle>{farmCounter} points</Subtitle>
+    <div className="flex flex-col items-end space-y-1">
+      <div className="size-10">
+        <ProgressBar progress={progress} />
       </div>
-      <ProgressBar
-        timeLeft={timeLeft}
-        totalTime={timeToFull}
-        onClick={onFarm}
-      />
+      <BodyText>
+        {timeLeft.hours}:{timeLeft.minutes}:{timeLeft.seconds}
+      </BodyText>
+      <Button onClick={onFarm} className="w-32" size="small">
+        Collect
+      </Button>
     </div>
   );
 }
