@@ -7,7 +7,7 @@ export default function LikeIcon() {
   return (
     <div className="w-full h-full relative">
       {!!uncollectedLikes && (
-        <div className="absolute  flex items-center justify-center size-[9px] bg-gradient-pink text-[8px] font-bold right-0 -top-0 rounded-full">
+        <div className="absolute  flex items-center justify-center size-[12px] bg-gradient-pink text-[8px] font-bold right-0 -top-0 rounded-full">
           {uncollectedLikes}
         </div>
       )}

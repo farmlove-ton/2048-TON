@@ -23,9 +23,15 @@ export default function LikeMatchModal({ suggestion, onKeepSwiping }: IProps) {
     <>
       <Title>It's a Match!</Title>
       <BodyText>Unleashing a new friendship</BodyText>
-      <div className="flex">
-        {user.photoUrl && <CircleImage src={user.photoUrl} alt="avatar" />}
-        {suggestion.photoUrl && <CircleImage src="someUrl" alt="avatar" />}
+      <div className="flex justify-center">
+        <div className="size-20">
+          {user.photoUrl && <CircleImage src={user.photoUrl} alt="avatar" />}
+        </div>
+        <div className="size-20 -ml-4">
+          {suggestion.photoUrl && (
+            <CircleImage src={suggestion.photoUrl} alt="avatar" />
+          )}
+        </div>
       </div>
       <div className="flex flex-col space-y-4">
         <Button onClick={onSendMessage}>Send a Message</Button>

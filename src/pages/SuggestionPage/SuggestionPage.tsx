@@ -11,6 +11,7 @@ import PageLayout from "../../layouts/PageLayout";
 import { LikeMatchModal } from "../../components/Modals";
 import { ModalContext } from "../../context/ModalContext";
 import { AxiosError } from "axios";
+import { UserContext } from "../../context/UserContext";
 
 const LovePoints = () => {
   return (
@@ -34,6 +35,7 @@ const SuggestionPage = () => {
   const user = useAuthenticatedUser();
   const navigate = useNavigate();
   const { handleOpenModal, handleCloseModal } = useContext(ModalContext);
+  const { takeTicket } = useContext(UserContext);
 
   const { data, isFetching, refetch } = useQuery({
     queryKey: ["suggestion"],
@@ -90,6 +92,8 @@ const SuggestionPage = () => {
     try {
       const result = await likeMutation.mutateAsync(data.telegramId);
 
+      takeTicket();
+
       if (result.match) {
         handleOpenModal(
           <LikeMatchModal
@@ -101,7 +105,9 @@ const SuggestionPage = () => {
         refetch();
       }
     } catch (err) {
-      catchSkipErr(err);
+      if (err instanceof AxiosError) {
+        catchSkipErr(err.response?.data);
+      }
     }
   };
 

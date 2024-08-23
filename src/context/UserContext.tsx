@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createContext, useEffect, useMemo, useRef } from "react";
+import { createContext, useEffect, useRef } from "react";
 import { fetchUser, retreiveDailyReward } from "../api/userService";
 import { farmLovePoints } from "../api/farmService";
 import { Sex } from "../api/types";
@@ -36,6 +36,7 @@ interface UserContextType {
   isFetched: boolean;
   refetchUser: () => void;
   farmLovePoints: () => void;
+  takeTicket: () => void;
 }
 
 const UserContext = createContext<UserContextType>({
@@ -43,6 +44,7 @@ const UserContext = createContext<UserContextType>({
   isFetched: false,
   refetchUser: () => {},
   farmLovePoints: () => {},
+  takeTicket: () => {},
 });
 
 interface IProps {
@@ -54,13 +56,15 @@ const UserProvider = ({ children }: IProps) => {
 
   const queryClient = useQueryClient();
 
-  const { data, isFetched, refetch } = useQuery({
+  const {
+    data: user,
+    isFetched,
+    refetch,
+  } = useQuery({
     queryKey: ["user"],
     queryFn: fetchUser,
     retry: false,
   });
-
-  const user = useMemo(() => data || null, [data]);
 
   const retreiveDailyRewardMutation = useMutation({
     mutationFn: retreiveDailyReward,
@@ -100,6 +104,17 @@ const UserProvider = ({ children }: IProps) => {
     },
   });
 
+  const takeTicket = () => {
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    queryClient.setQueryData<User>(["user"], {
+      ...user,
+      tickets: user.tickets - 1,
+    });
+  };
+
   const handleFarmLovePoints = () => {
     farmLovePointsMutation.mutate();
   };
@@ -107,10 +122,11 @@ const UserProvider = ({ children }: IProps) => {
   return (
     <UserContext.Provider
       value={{
-        user,
+        user: user || null,
         isFetched,
         refetchUser: refetch,
         farmLovePoints: handleFarmLovePoints,
+        takeTicket,
       }}
     >
       {children}
