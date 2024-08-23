@@ -21,6 +21,10 @@ export const getUserData = () => {
   return WebApp.initDataUnsafe.user;
 };
 
+export const getInitData = () => {
+  return WebApp.initData;
+};
+
 export const openChat = (username: string) => {
   return WebApp.openTelegramLink(`https://t.me/${username}`);
 };

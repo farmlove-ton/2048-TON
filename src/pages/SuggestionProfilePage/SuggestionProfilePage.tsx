@@ -1,6 +1,5 @@
 import { CheckCircleIcon, CircleStackIcon } from "@heroicons/react/24/outline";
-import { Button } from "../../components";
-import Navigation from "../../components/Navigation";
+import { Button, Navigation } from "../../components";
 
 const getSuggestion = () => {
   return {

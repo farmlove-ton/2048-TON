@@ -1,12 +1,12 @@
 import { CheckCircleIcon, CircleStackIcon } from "@heroicons/react/24/outline";
-import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 
-import { Button, Spinner } from "../../components";
-import Navigation from "../../components/Navigation";
+import { Button, Spinner, Navigation } from "../../components";
 import PageLayout from "../../layouts/PageLayout";
-import { fetchUser } from "../../api/userService";
-import { openChat } from "../../lib/telegram";
+import { fetchUserProfile } from "../../api/userService";
+import { openChat, showBackButton } from "../../lib/telegram";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 const Confirmed = () => {
   return (
@@ -17,12 +17,15 @@ const Confirmed = () => {
 };
 
 const AdmirerPage = () => {
+  useEffect(() => {
+    showBackButton();
+  }, []);
+
   const params = useParams();
 
-  const { data, isFetched } = useQuery({
+  const { data, isFetching } = useQuery({
     queryKey: [],
-    queryFn: () => fetchUser(Number(params.telegramId)),
-    retry: false,
+    queryFn: () => fetchUserProfile(Number(params.telegramId)),
   });
 
   const onSendMessage = () => {
@@ -31,7 +34,7 @@ const AdmirerPage = () => {
     }
   };
 
-  if (!isFetched) {
+  if (isFetching) {
     return (
       <div className="w-full h-full flex items-center justify-center">
         <Spinner />

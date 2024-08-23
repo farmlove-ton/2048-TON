@@ -12,9 +12,10 @@ import {
 } from "../../components";
 import { showBackButton } from "../../lib/telegram";
 import { UserProfileContext } from "../../context/UserProfileContext";
+import { Sex } from "../../api/types";
 
 interface IFormInput {
-  range: { from: number; to: number };
+  suggestionAge: { from: number; to: number };
   likeToSeeMen: boolean;
   likeToSeeWomen: boolean;
 }
@@ -24,12 +25,9 @@ const TellUsMorePage = () => {
 
   const { register, handleSubmit, control } = useForm<IFormInput>({
     defaultValues: {
-      range: {
-        from: 20,
-        to: 30,
-      },
-      likeToSeeMen: false,
-      likeToSeeWomen: false,
+      suggestionAge: userProfile.suggestionAge,
+      likeToSeeMen: userProfile.suggestionSex.includes("Male"),
+      likeToSeeWomen: userProfile.suggestionSex.includes("Female"),
     },
   });
   const navigate = useNavigate();
@@ -39,7 +37,16 @@ const TellUsMorePage = () => {
   }, []);
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    setUserProfile({ ...userProfile, ...data });
+    const suggestionSex: Sex[] = [];
+
+    if (data.likeToSeeMen) {
+      suggestionSex.push("Male");
+    }
+    if (data.likeToSeeWomen) {
+      suggestionSex.push("Female");
+    }
+
+    setUserProfile({ ...userProfile, ...data, suggestionSex });
 
     navigate("/add-photo");
   };
@@ -81,7 +88,7 @@ const TellUsMorePage = () => {
 
             <div className="pt-4">
               <Controller
-                name="range"
+                name="suggestionAge"
                 control={control}
                 render={({ field }) => (
                   <NumberRange min={18} max={100} {...field} />

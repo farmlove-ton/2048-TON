@@ -1,6 +1,5 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { CircleStackIcon, TicketIcon } from "@heroicons/react/24/outline";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
 import {
@@ -12,45 +11,33 @@ import {
 } from "../../components";
 import PageLayout from "../../layouts/PageLayout";
 import { useAuthenticatedUser } from "../../hooks/useAuthenticatedUser";
-import { farm } from "../../api/farmService";
 import { NoTicketsModal } from "../../components/Modals";
-import { useModal } from "../../hooks/useModal";
 import FarmBar from "../../components/FarmBar/FarmBar";
+import { UserContext } from "../../context/UserContext";
+import { ModalContext } from "../../context/ModalContext";
 
 const HomePage = () => {
   const user = useAuthenticatedUser();
-  const queryClient = useQueryClient();
+  const { farmLovePoints } = useContext(UserContext);
+  const { handleOpenModal } = useContext(ModalContext);
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const hasNoTickets = searchParams.has("noTickets");
 
-  const noTicketsModalProps = useModal({
-    initialOpen: hasNoTickets,
-  });
-
   useEffect(() => {
     if (hasNoTickets) {
+      handleOpenModal(<NoTicketsModal />);
+
       const newSearchParams = new URLSearchParams(searchParams.toString());
       newSearchParams.delete("noTickets");
       setSearchParams(newSearchParams);
     }
-  }, [hasNoTickets, searchParams, setSearchParams]);
-
-  const farmMutation = useMutation({
-    mutationFn: farm,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["user"] });
-    },
-  });
-
-  const handleFarm = async () => {
-    farmMutation.mutate(user.telegramId);
-  };
+  }, [hasNoTickets, searchParams, setSearchParams, handleOpenModal]);
 
   const handleDiscover = () => {
     if (!user.tickets) {
-      noTicketsModalProps.open();
+      handleOpenModal(<NoTicketsModal />);
       return;
     }
 
@@ -75,7 +62,7 @@ const HomePage = () => {
             <div className="flex justify-around space-x-2 items-center">
               <div className="flex items-center space-x-1">
                 <CircleStackIcon className="size-4" />
-                <BodyTextThin>{user.points}</BodyTextThin>
+                <BodyTextThin>{user.lovePoints}</BodyTextThin>
               </div>
 
               <div className="border-l h-3"></div>
@@ -109,15 +96,6 @@ const HomePage = () => {
               <SmallText>Tickets</SmallText>
               <Title>{user.tickets}</Title>
             </div>
-
-            <FarmBar
-              farmCounter={user.farmCounter}
-              farmedAmount={user.farmedAmount}
-              maxCounter={user.maxCounter}
-              updatedUserTicketsAmount={user.updatedUserTicketsAmount}
-              timeToFull={user.timeToFull}
-              onFarm={handleFarm}
-            />
           </div>
           <div
             className="flex-1 flex flex-row border border-gray-600/50 rounded-xl px-6 py-3 justify-between"
@@ -129,16 +107,14 @@ const HomePage = () => {
             <div className="flex flex-col items-start">
               <CircleStackIcon className="size-8" />
               <SmallText>Points</SmallText>
-              <Title>{user.points}</Title>
+              <Title>{user.lovePoints}</Title>
             </div>
 
             <FarmBar
-              farmCounter={user.farmCounter}
-              farmedAmount={user.farmedAmount}
-              maxCounter={user.maxCounter}
-              updatedUserTicketsAmount={user.updatedUserTicketsAmount}
-              timeToFull={user.timeToFull}
-              onFarm={handleFarm}
+              farmCounter={user.remainingLovePointPart}
+              maxCounter={user.maxLovePoints}
+              initialTimeLeft={user.lovePointTimeToFull}
+              onFarm={farmLovePoints}
             />
           </div>
         </div>
@@ -147,8 +123,6 @@ const HomePage = () => {
           Farm love
         </Button>
       </div>
-
-      <NoTicketsModal {...noTicketsModalProps} />
     </PageLayout>
   );
 };

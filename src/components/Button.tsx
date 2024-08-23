@@ -7,6 +7,7 @@ type TProps = React.DetailedHTMLProps<
   color?: TColors;
   variant?: TVariants;
   size?: TSize;
+  icon?: React.ReactNode;
 };
 
 type TVariants = "text" | "outlined" | "contained";
@@ -15,7 +16,7 @@ type TSize = "small" | "normal";
 
 const classes = {
   button:
-    "rounded-2xl font-medium cursor-pointer transition-colors duration-200 focus:outline-none hover:opacity-90",
+    "rounded-2xl font-medium cursor-pointer transition-colors duration-200 focus:outline-none hover:opacity-90 inline-flex items-center justify-center",
   small: "text-xs py-1 px-4",
   normal: "text-base py-2 px-4",
 };
@@ -50,6 +51,8 @@ const Button = ({
   variant = "contained",
   color = "default",
   className,
+  icon,
+  children,
   ...props
 }: TProps) => {
   return (
@@ -62,7 +65,10 @@ const Button = ({
       )}
       type={type}
       {...props}
-    />
+    >
+      {children}
+      {icon && <span className="ml-2">{icon}</span>}
+    </button>
   );
 };
 

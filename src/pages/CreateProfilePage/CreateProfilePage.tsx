@@ -14,12 +14,13 @@ import {
 } from "../../components";
 import { showBackButton } from "../../lib/telegram";
 import { UserProfileContext } from "../../context/UserProfileContext";
+import { Sex } from "../../api/types";
 
 interface IFormInput {
   firstName: string;
   lastName: string;
   age: number;
-  sex: string;
+  sex: Sex;
 }
 
 const CreateProfilePage = () => {
@@ -90,8 +91,8 @@ const CreateProfilePage = () => {
                 <RadioGroup
                   {...field}
                   options={[
-                    { label: "Male", value: "male" },
-                    { label: "Female", value: "female" },
+                    { label: "Male", value: "Male" },
+                    { label: "Female", value: "Female" },
                   ]}
                 />
               )}

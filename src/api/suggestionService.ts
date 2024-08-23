@@ -1,4 +1,5 @@
-import { get } from "./apiService";
+import { get, post } from "./apiService";
+import { Sex } from "./types";
 
 interface Suggestion {
   telegramId: number;
@@ -8,11 +9,19 @@ interface Suggestion {
   lastName: string;
   bio: string;
   age: number;
-  sex: string;
+  sex: Sex;
   love: number;
   photoUrl: string;
 }
 
-export const fetchSuggestion = async (userId: number): Promise<Suggestion> => {
-  return get<Suggestion>(`/user/${userId}/suggestion`);
+interface LikedSuggestion {
+  match: boolean;
+}
+
+export const fetchSuggestion = async (): Promise<Suggestion> => {
+  return get<Suggestion>(`/user/suggestion`);
+};
+
+export const like = async (suggestionId: number): Promise<LikedSuggestion> => {
+  return post<LikedSuggestion>(`/user/like/${suggestionId}`);
 };

@@ -3,14 +3,16 @@ import { useEffect, useState } from "react";
 interface IProps {
   farmCounter: number;
   maxCounter: number;
-  timeToFull: number;
+  initialTimeLeft: number;
 }
 
-export const useFarmBar = ({ farmCounter, maxCounter, timeToFull }: IProps) => {
+export const useFarmBar = ({
+  farmCounter,
+  maxCounter,
+  initialTimeLeft,
+}: IProps) => {
   const percentageComplete = farmCounter / maxCounter;
-  const elapsedTime = timeToFull * percentageComplete;
-  const initialTimeLeft = Math.ceil(timeToFull - elapsedTime);
-
+  const timeToFull = Math.ceil(initialTimeLeft / (1 - percentageComplete));
   const [timeLeft, setTimeLeft] = useState(initialTimeLeft);
 
   const progress = Math.ceil(((timeToFull - timeLeft) / timeToFull) * 100);
@@ -28,6 +30,10 @@ export const useFarmBar = ({ farmCounter, maxCounter, timeToFull }: IProps) => {
 
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    setTimeLeft(initialTimeLeft);
+  }, [initialTimeLeft]);
 
   return {
     progress,

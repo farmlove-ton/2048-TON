@@ -10,6 +10,7 @@ import {
   OutlineCheckbox,
   RadioGroup,
   Slider,
+  Spinner,
   Textarea,
   Title,
   WithLabel,
@@ -17,15 +18,16 @@ import {
 import { UserProfileContext } from "../../context/UserProfileContext";
 import { useAuthenticatedUser } from "../../hooks/useAuthenticatedUser";
 import { showBackButton } from "../../lib/telegram";
+import { Sex } from "../../api/types";
 
 interface IFormInput {
   firstName: string;
   lastName: string;
   age: number;
-  sex: string;
+  sex: Sex;
   photo?: File | string;
   bio: string;
-  range: { from: number; to: number };
+  suggestionAge: { from: number; to: number };
   likeToSeeMen: boolean;
   likeToSeeWomen: boolean;
 }
@@ -37,7 +39,7 @@ const EditProfilePage = () => {
     showBackButton();
   }, []);
 
-  const { registerUser } = useContext(UserProfileContext);
+  const { updateUser, isLoading } = useContext(UserProfileContext);
 
   const { register, control, handleSubmit } = useForm<IFormInput>({
     defaultValues: {
@@ -47,25 +49,32 @@ const EditProfilePage = () => {
       sex: user.sex,
       photo: user.photoUrl,
       bio: user.bio,
-      range: {
-        from: 20,
-        to: 30,
-      },
-      likeToSeeMen: false,
-      likeToSeeWomen: false,
+      suggestionAge: { from: user.suggestionAgeMin, to: user.suggestionAgeMax },
+      likeToSeeMen: user.suggestionSex.includes("Male"),
+      likeToSeeWomen: user.suggestionSex.includes("Female"),
     },
   });
 
   return (
-    <div className="h-full overflow-y-auto">
+    <div className="">
       <form
         className="p-4 flex flex-col justify-between"
         onSubmit={handleSubmit(async (values) => {
-          await registerUser({
+          const suggestionSex: Sex[] = [];
+
+          if (values.likeToSeeMen) {
+            suggestionSex.push("Male");
+          }
+          if (values.likeToSeeWomen) {
+            suggestionSex.push("Female");
+          }
+
+          await updateUser({
             ...values,
             telegramId: user.telegramId,
             chatId: user.chatId,
             photo: values.photo instanceof File ? values.photo : undefined,
+            suggestionSex,
           });
         })}
       >
@@ -128,8 +137,8 @@ const EditProfilePage = () => {
                   <RadioGroup
                     {...field}
                     options={[
-                      { label: "Male", value: "male" },
-                      { label: "Female", value: "female" },
+                      { label: "Male", value: "Male" },
+                      { label: "Female", value: "Female" },
                     ]}
                   />
                 )}
@@ -138,7 +147,7 @@ const EditProfilePage = () => {
 
             <WithLabel label="Preferred Age range">
               <Controller
-                name="range"
+                name="suggestionAge"
                 control={control}
                 render={({ field }) => (
                   <NumberRange min={18} max={100} {...field} />
@@ -159,7 +168,11 @@ const EditProfilePage = () => {
           </div>
         </div>
 
-        <Button className="my-4" type="submit">
+        <Button
+          className="my-4"
+          type="submit"
+          icon={isLoading ? <Spinner size="small" /> : null}
+        >
           Save
         </Button>
       </form>

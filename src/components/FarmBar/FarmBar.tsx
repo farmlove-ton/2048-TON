@@ -6,22 +6,20 @@ import { useFarmBar } from "./useFarmBar";
 interface IProps {
   onFarm: () => void;
   farmCounter: number;
-  farmedAmount: number;
   maxCounter: number;
-  updatedUserTicketsAmount: number;
-  timeToFull: number;
+  initialTimeLeft: number;
 }
 
 export default function FarmBar({
   onFarm,
   farmCounter,
   maxCounter,
-  timeToFull,
+  initialTimeLeft,
 }: IProps) {
   const { progress, timeLeft } = useFarmBar({
     farmCounter,
     maxCounter,
-    timeToFull,
+    initialTimeLeft,
   });
 
   return (

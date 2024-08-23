@@ -4,3 +4,5 @@ export type ApiResponse<T> = {
   status: string;
   // other fields...
 };
+
+export type Sex = "Male" | "Female";

@@ -6,6 +6,7 @@ import "./App.css";
 import { UserProfileProvider } from "./context/UserProfileContext";
 import { UserProvider } from "./context/UserContext";
 import AppRoutes from "./AppRoutes";
+import { ModalProvider } from "./context/ModalContext";
 
 const queryClient = new QueryClient();
 
@@ -17,11 +18,13 @@ function App() {
         uiPreferences={{ theme: THEME.DARK }}
       >
         <UserProvider>
-          <UserProfileProvider>
-            <Router>
-              <AppRoutes />
-            </Router>
-          </UserProfileProvider>
+          <ModalProvider>
+            <UserProfileProvider>
+              <Router>
+                <AppRoutes />
+              </Router>
+            </UserProfileProvider>
+          </ModalProvider>
         </UserProvider>
       </TonConnectUIProvider>
     </QueryClientProvider>

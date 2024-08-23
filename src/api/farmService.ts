@@ -1,5 +1,13 @@
 import { post } from "./apiService";
 
-export const farm = async (userId: number): Promise<number> => {
-  return post<number>(`/user/${userId}/farm`, null);
+interface FarmResult {
+  farmCounter: number;
+  farmedAmount: number;
+  maxCounter: number;
+  newAmount: number;
+  timeToFull: number;
+}
+
+export const farmLovePoints = async (): Promise<FarmResult> => {
+  return post<FarmResult>(`/user/lovepoints/farm`);
 };

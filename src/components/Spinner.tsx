@@ -1,10 +1,29 @@
-const Spinner = () => {
+type TSize = "small" | "medium" | "large";
+
+interface IProps {
+  size?: TSize;
+}
+
+const sizeToTailwind = (size: TSize) => {
+  switch (size) {
+    case "small":
+      return "size-4";
+    case "medium":
+      return "size-12";
+    case "large":
+      return "size-16";
+  }
+};
+
+const Spinner = ({ size = "large" }: IProps) => {
+  const sizeClassName = sizeToTailwind(size);
+
   return (
-    <div role="status">
+    <div role="status" className="flex">
       <svg
         aria-hidden="true"
-        className="inline size-16 text-gray-200 animate-spin dark:text-gray-600 fill-[#9D62D9]"
-        viewBox="0 0 100 101"
+        className={`inline ${sizeClassName} text-gray-200 animate-spin dark:text-gray-600 fill-[#9D62D9]`}
+        viewBox="0 0 100 100"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >

@@ -1,11 +1,11 @@
 import {
   ChatBubbleOvalLeftEllipsisIcon,
-  HeartIcon,
   HomeIcon,
   UserCircleIcon,
 } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import { Link, useLocation } from "react-router-dom";
+import LikeIcon from "./components/LikeIcon";
 
 interface IIcon {
   path: string;
@@ -26,7 +26,7 @@ const items: IIcon[] = [
   },
   {
     path: "/likes",
-    Icon: HeartIcon,
+    Icon: LikeIcon,
     name: "Likes",
   },
   {
@@ -56,7 +56,9 @@ const Icon = (props: { icon: IIcon; selected: boolean }) => {
           selected ? classes.selected : classes.notSelected
         )}
       >
-        <Icon className="size-5" />
+        <div className="size-5">
+          <Icon className="w-full h-full" />
+        </div>
         <span>{name}</span>
       </div>
     </Link>

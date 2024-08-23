@@ -1,12 +1,16 @@
 import { CheckCircleIcon, CircleStackIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useContext } from "react";
 
 import { Button, Spinner } from "../../components";
-import Navigation from "../../components/Navigation";
+import Navigation from "../../components/Navigation/Navigation";
 import { useAuthenticatedUser } from "../../hooks/useAuthenticatedUser";
-import { fetchSuggestion } from "../../api/suggestionService";
+import { fetchSuggestion, like } from "../../api/suggestionService";
 import PageLayout from "../../layouts/PageLayout";
+import { LikeMatchModal } from "../../components/Modals";
+import { ModalContext } from "../../context/ModalContext";
+import { AxiosError } from "axios";
 
 const LovePoints = () => {
   return (
@@ -29,27 +33,30 @@ const Confirmed = () => {
 const SuggestionPage = () => {
   const user = useAuthenticatedUser();
   const navigate = useNavigate();
+  const { handleOpenModal, handleCloseModal } = useContext(ModalContext);
 
-  const { data, isFetched, refetch } = useQuery({
+  const { data, isFetching, refetch } = useQuery({
     queryKey: ["suggestion"],
-    queryFn: () => fetchSuggestion(user.telegramId),
+    queryFn: fetchSuggestion,
     retry: false,
   });
 
-  const onNext = () => {
-    refetch();
-  };
-
-  const handleLike = () => {
-    if (!user.tickets) {
+  const catchSkipErr = (err: unknown) => {
+    if (
+      err &&
+      typeof err === "object" &&
+      "message" in err &&
+      Array.isArray(err.message) &&
+      err.message[0] === "You have not enough tickets"
+    ) {
       navigate("/home?noTickets=true");
-      return;
     }
-
-    refetch();
   };
+  const likeMutation = useMutation({
+    mutationFn: like,
+  });
 
-  if (!isFetched) {
+  if (isFetching) {
     return (
       <div className="w-full h-full flex items-center justify-center">
         <Spinner />
@@ -60,6 +67,43 @@ const SuggestionPage = () => {
   if (!data) {
     return <PageLayout>No data found</PageLayout>;
   }
+
+  const onNext = async () => {
+    const result = await refetch();
+
+    if (result.error instanceof AxiosError) {
+      catchSkipErr(result.error.response?.data);
+    }
+  };
+
+  const handleKeepSwipingAfterLike = () => {
+    handleCloseModal();
+    onNext();
+  };
+
+  const handleLike = async () => {
+    if (!user.tickets) {
+      navigate("/home?noTickets=true");
+      return;
+    }
+
+    try {
+      const result = await likeMutation.mutateAsync(data.telegramId);
+
+      if (result.match) {
+        handleOpenModal(
+          <LikeMatchModal
+            suggestion={data}
+            onKeepSwiping={handleKeepSwipingAfterLike}
+          />
+        );
+      } else {
+        refetch();
+      }
+    } catch (err) {
+      catchSkipErr(err);
+    }
+  };
 
   const name = `${data.firstName} ${data.lastName}`;
   const photoUrl = data.photoUrl;

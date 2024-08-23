@@ -9,15 +9,19 @@ export const get = async <T>(url: string, params = {}): Promise<T> => {
 
 export const post = async <T>(
   url: string,
-  data: unknown,
+  data?: unknown,
   config?: AxiosRequestConfig<unknown>
 ): Promise<T> => {
   const response = await axiosInstance.post<T>(url, data, config);
   return response.data;
 };
 
-export const put = async <T>(url: string, data: unknown): Promise<T> => {
-  const response = await axiosInstance.put<T>(url, data);
+export const put = async <T>(
+  url: string,
+  data?: unknown,
+  config?: AxiosRequestConfig<unknown>
+): Promise<T> => {
+  const response = await axiosInstance.put<T>(url, data, config);
   return response.data;
 };
 

@@ -1,17 +1,24 @@
 // src/api/axiosInstance.ts
 import axios from "axios";
+import { getInitData } from "../lib/telegram";
 
 const axiosInstance = axios.create({
   baseURL: "https://farmlove.xyz:18081",
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
+    "ngrok-skip-browser-warning": "true",
   },
 });
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    // Add token or other custom headers here if needed
+    const initData = getInitData();
+
+    if (initData) {
+      config.headers.Authorization = JSON.stringify(initData);
+    }
+
     return config;
   },
   (error) => {
