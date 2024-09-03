@@ -18,10 +18,12 @@ const NumberRange: React.FC<RangeProps> = forwardRef(
       onChange({ from: values[0], to: values[1] });
     };
 
+    const toValueLabel = value.to === max ? `${max - 1}+` : value.to;
+
     return (
       <div className="w-full relative">
         <span className="absolute -top-6 right-0">
-          {value.from} - {value.to}
+          {value.from} - {toValueLabel}
         </span>
         <Range
           ref={ref}

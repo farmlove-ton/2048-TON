@@ -121,7 +121,7 @@ const EditProfilePage = () => {
               <Controller
                 name="age"
                 control={control}
-                render={({ field }) => <Slider {...field} min={18} max={100} />}
+                render={({ field }) => <Slider {...field} min={18} max={51} />}
               />
             </WithLabel>
 
@@ -150,7 +150,7 @@ const EditProfilePage = () => {
                 name="suggestionAge"
                 control={control}
                 render={({ field }) => (
-                  <NumberRange min={18} max={100} {...field} />
+                  <NumberRange min={18} max={51} {...field} />
                 )}
               />
             </WithLabel>

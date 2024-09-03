@@ -75,7 +75,7 @@ const CreateProfilePage = () => {
             <Controller
               name="age"
               control={control}
-              render={({ field }) => <Slider {...field} min={18} max={100} />}
+              render={({ field }) => <Slider {...field} min={18} max={51} />}
             />
           </WithLabel>
 

@@ -18,9 +18,11 @@ const Slider: React.FC<IProps> = forwardRef(
       onChange(values[0]);
     };
 
+    const toValueLabel = value === max ? `${max - 1}+` : value;
+
     return (
       <div className="w-full relative">
-        <span className="absolute -top-6 right-0">{value}</span>
+        <span className="absolute -top-6 right-0">{toValueLabel}</span>
         <Range
           ref={ref}
           values={[value]}

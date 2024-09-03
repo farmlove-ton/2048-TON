@@ -91,7 +91,7 @@ const TellUsMorePage = () => {
                 name="suggestionAge"
                 control={control}
                 render={({ field }) => (
-                  <NumberRange min={18} max={100} {...field} />
+                  <NumberRange min={18} max={51} {...field} />
                 )}
               />
             </div>
