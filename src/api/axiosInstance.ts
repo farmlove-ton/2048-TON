@@ -1,9 +1,11 @@
 // src/api/axiosInstance.ts
 import axios from "axios";
+import * as Sentry from "@sentry/react";
+
 import { getInitData } from "../lib/telegram";
 
 const axiosInstance = axios.create({
-  baseURL: "https://farmlove.xyz:18081",
+  baseURL: "https://47d4-85-206-170-152.ngrok-free.app",
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -22,6 +24,7 @@ axiosInstance.interceptors.request.use(
     return config;
   },
   (error) => {
+    Sentry.captureException(error);
     return Promise.reject(error);
   }
 );
