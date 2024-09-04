@@ -171,6 +171,7 @@ const EditProfilePage = () => {
         <Button
           className="my-4"
           type="submit"
+          disabled={isLoading}
           icon={isLoading ? <Spinner size="small" /> : null}
         >
           Save

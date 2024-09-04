@@ -6,6 +6,7 @@ import {
   BodyTextThin,
   Button,
   FileUploader,
+  Spinner,
   Tab,
   Textarea,
   Title,
@@ -19,7 +20,8 @@ interface IFormInput {
 }
 
 const CreateProfilePage = () => {
-  const { userProfile, registerUser } = useContext(UserProfileContext);
+  const { userProfile, registerUser, isLoading } =
+    useContext(UserProfileContext);
 
   const { register, control, handleSubmit, watch, setValue } =
     useForm<IFormInput>({
@@ -103,8 +105,14 @@ const CreateProfilePage = () => {
       </div>
 
       <div className="flex flex-col space-y-2">
-        <Button type="submit">Continue</Button>
-        <Button variant="text" onClick={onSkip}>
+        <Button
+          type="submit"
+          disabled={isLoading}
+          icon={isLoading ? <Spinner size="small" /> : null}
+        >
+          Continue
+        </Button>
+        <Button variant="text" disabled={isLoading} onClick={onSkip}>
           Skip
         </Button>
       </div>
