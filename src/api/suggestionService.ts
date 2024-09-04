@@ -10,7 +10,7 @@ interface Suggestion {
   bio: string;
   age: number;
   sex: Sex;
-  love: number;
+  lovePoints: number;
   photoUrl: string;
 }
 

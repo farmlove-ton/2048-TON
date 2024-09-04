@@ -13,11 +13,11 @@ import { ModalContext } from "../../context/ModalContext";
 import { AxiosError } from "axios";
 import { UserContext } from "../../context/UserContext";
 
-const LovePoints = () => {
+const LovePoints = ({ amount }: { amount: number }) => {
   return (
     <div className="font-bold">
       <div className="px-2 border border-white border-1 rounded-xl flex items-center justify-center">
-        7909 loves
+        {amount} points
       </div>
     </div>
   );
@@ -123,7 +123,7 @@ const SuggestionPage = () => {
       ></div>
       <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black opacity-70 pointer-events-none"></div>
       <div className="absolute top-4 right-4">
-        <LovePoints />
+        <LovePoints amount={data.lovePoints} />
       </div>
       <div className="relative mt-auto p-4 space-y-4 z-10">
         <div className="flex items-center font-bold space-x-2">
