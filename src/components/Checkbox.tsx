@@ -17,8 +17,6 @@ const classes = {
   wrapper: "flex items-center space-x-2.5",
   checkbox: "flex justify-center items-center cursor-pointer",
   label: "text-sm",
-  errorsBlock: "mt-1",
-  errorsMsg: "text-xs text-red-500 text-left",
   error: "rounded ring-1 ring-red-500",
 };
 
@@ -30,7 +28,7 @@ const Checkbox = forwardRef(
     const classname = clsx(
       classes.checkbox,
       className,
-      !!isError && classes.error
+      isError && classes.error
     );
 
     return (

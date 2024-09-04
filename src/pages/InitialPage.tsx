@@ -19,7 +19,12 @@ const InitialPage = () => {
     },
   });
 
-  const { register, handleSubmit, setError } = methods;
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = methods;
 
   const onSubmit: SubmitHandler<IFormInput> = (values) => {
     if (!values.moreThan18) {
@@ -56,9 +61,11 @@ const InitialPage = () => {
           <Button className="w-full" type="submit">
             Start
           </Button>
-          <WithError name="moreThan18">
+
+          <WithError error={errors.moreThan18?.message}>
             <Checkbox
               {...register("moreThan18")}
+              isError={!!errors.moreThan18}
               label="I am more than 18 years"
             />
           </WithError>

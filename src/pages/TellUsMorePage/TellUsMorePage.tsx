@@ -1,18 +1,23 @@
 import { useContext, useEffect } from "react";
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import {
+  useForm,
+  SubmitHandler,
+  Controller,
+  FormProvider,
+} from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 import {
   BodyTextThin,
   Button,
   NumberRange,
-  OutlineCheckbox,
   Tab,
   Title,
 } from "../../components";
 import { showBackButton } from "../../lib/telegram";
 import { UserProfileContext } from "../../context/UserProfileContext";
 import { Sex } from "../../api/types";
+import { GenderPreferences } from "../../components/GenderPreferences";
 
 interface IFormInput {
   suggestionAge: { from: number; to: number };
@@ -21,16 +26,18 @@ interface IFormInput {
 }
 
 const TellUsMorePage = () => {
+  const navigate = useNavigate();
   const { userProfile, setUserProfile } = useContext(UserProfileContext);
 
-  const { register, handleSubmit, control } = useForm<IFormInput>({
+  const methods = useForm<IFormInput>({
     defaultValues: {
       suggestionAge: userProfile.suggestionAge,
       likeToSeeMen: userProfile.suggestionSex.includes("Male"),
       likeToSeeWomen: userProfile.suggestionSex.includes("Female"),
     },
   });
-  const navigate = useNavigate();
+
+  const { handleSubmit, control } = methods;
 
   useEffect(() => {
     showBackButton();
@@ -52,55 +59,50 @@ const TellUsMorePage = () => {
   };
 
   return (
-    <form
-      className="p-4 flex flex-col h-full justify-between"
-      onSubmit={handleSubmit(onSubmit)}
-    >
-      <div className="space-y-8">
-        <div className="flex justify-between items-center space-x-2">
-          <Tab />
-          <Tab isSelected />
-          <Tab />
-        </div>
-
-        <div className="flex flex-col space-y-4">
-          <Title>Who would you like to see?</Title>
-          <BodyTextThin>
-            We want to make sure we find the right people for you. You can
-            always update this later.
-          </BodyTextThin>
-
-          <OutlineCheckbox
-            {...register("likeToSeeMen")}
-            label="I’d like to see men"
-          />
-          <OutlineCheckbox
-            {...register("likeToSeeWomen")}
-            label="I’d like to see women"
-          />
+    <FormProvider {...methods}>
+      <form
+        className="p-4 flex flex-col h-full justify-between"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <div className="space-y-8">
+          <div className="flex justify-between items-center space-x-2">
+            <Tab />
+            <Tab isSelected />
+            <Tab />
+          </div>
 
           <div className="flex flex-col space-y-4">
-            <Title>Age range</Title>
+            <Title>Who would you like to see?</Title>
             <BodyTextThin>
               We want to make sure we find the right people for you. You can
               always update this later.
             </BodyTextThin>
 
-            <div className="pt-4">
-              <Controller
-                name="suggestionAge"
-                control={control}
-                render={({ field }) => (
-                  <NumberRange min={18} max={51} {...field} />
-                )}
-              />
+            <GenderPreferences />
+
+            <div className="flex flex-col space-y-4">
+              <Title>Age range</Title>
+              <BodyTextThin>
+                We want to make sure we find the right people for you. You can
+                always update this later.
+              </BodyTextThin>
+
+              <div className="pt-4">
+                <Controller
+                  name="suggestionAge"
+                  control={control}
+                  render={({ field }) => (
+                    <NumberRange min={18} max={51} {...field} />
+                  )}
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <Button type="submit">Continue</Button>
-    </form>
+        <Button type="submit">Continue</Button>
+      </form>
+    </FormProvider>
   );
 };
 

@@ -13,15 +13,21 @@ type TProps = Omit<
 > & {
   label?: React.ReactNode;
   className?: string;
+  isError?: boolean;
 };
 
 const OutlineCheckbox: React.FC<TProps> = forwardRef(
   (
-    { label, className, ...rest },
+    { label, className, isError, ...rest },
     ref: React.LegacyRef<HTMLInputElement> | undefined
   ) => {
     return (
-      <label className="flex items-center justify-between appearance-none bg-transparent w-full rounded-2xl border border-opacity-25 border-[#E2DAEC] p-4 focus:outline-none focus:border-gray-500 cursor-pointer">
+      <label
+        className={clsx(
+          "flex items-center justify-between appearance-none bg-transparent w-full rounded-2xl border border-opacity-25 border-[#E2DAEC] p-4 focus:outline-none focus:border-gray-500 cursor-pointer",
+          isError && "border-red-500"
+        )}
+      >
         <BodyTextSemibold>{label}</BodyTextSemibold>
 
         <div className="relative h-5 w-5">
@@ -31,6 +37,7 @@ const OutlineCheckbox: React.FC<TProps> = forwardRef(
             type="checkbox"
             className={clsx(
               "peer appearance-none h-5 w-5 border border-[#E2DAEC] border-opacity-25 rounded-md checked:bg-[#7000a0] checked:border-transparent focus:outline-none",
+              isError && "border-red-400",
               className
             )}
           />

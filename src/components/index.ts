@@ -14,6 +14,7 @@ export { default as Logo } from "./Logo";
 export { default as CircleImage } from "./CircleImage";
 export { default as ProtectedRoute } from "./ProtectedRoute";
 export { default as Spinner } from "./Spinner";
+export { default as WithError } from "./WithError";
 export * from "./Navigation";
 export * from "./Text";
 export * from "./FarmBar";
