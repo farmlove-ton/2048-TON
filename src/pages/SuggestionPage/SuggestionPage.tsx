@@ -12,6 +12,7 @@ import { LikeMatchModal } from "../../components/Modals";
 import { ModalContext } from "../../context/ModalContext";
 import { AxiosError } from "axios";
 import { UserContext } from "../../context/UserContext";
+import { showBackButton } from "../../lib/telegram";
 
 const LovePoints = ({ amount }: { amount: number }) => {
   return (
@@ -37,7 +38,9 @@ const SuggestionPage = () => {
   const { handleOpenModal, handleCloseModal } = useContext(ModalContext);
   const { takeTicket } = useContext(UserContext);
 
-  const { data, isFetching, refetch } = useQuery({
+  useEffect(() => {
+    showBackButton();
+  }, []);
     queryKey: ["suggestion"],
     queryFn: fetchSuggestion,
     retry: false,

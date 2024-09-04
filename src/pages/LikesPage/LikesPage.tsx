@@ -13,11 +13,16 @@ import { useAuthenticatedUser } from "../../hooks/useAuthenticatedUser";
 import { ModalContext } from "../../context/ModalContext";
 import { ClaimedLovePointsModal } from "../../components/Modals";
 import { pluralize } from "../../lib/utils/pluralize";
+import { hideBackButton } from "../../lib/telegram";
 
 const LikesPage = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { handleOpenModal } = useContext(ModalContext);
+
+  useEffect(() => {
+    hideBackButton();
+  }, []);
 
   const user = useAuthenticatedUser();
 

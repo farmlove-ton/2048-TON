@@ -15,6 +15,7 @@ import { NoTicketsModal } from "../../components/Modals";
 import FarmBar from "../../components/FarmBar/FarmBar";
 import { UserContext } from "../../context/UserContext";
 import { ModalContext } from "../../context/ModalContext";
+import { hideBackButton } from "../../lib/telegram";
 
 const HomePage = () => {
   const user = useAuthenticatedUser();
@@ -24,6 +25,11 @@ const HomePage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const hasNoTickets = searchParams.has("noTickets");
+
+  useEffect(() => {
+    hideBackButton();
+  }, []);
+
 
   useEffect(() => {
     if (hasNoTickets) {
