@@ -49,7 +49,7 @@ export const useFarmBar = ({ lastFarmTimestamp, maxTimeSeconds }: IProps) => {
   }, [initialRemainingTime]);
 
   return {
-    progress: Math.floor(percentage * 100),
+    progress: Math.floor(percentage * 1000) / 10,
     timeLeft: {
       hours: Math.floor(remainingTime / 3600)
         .toString()
