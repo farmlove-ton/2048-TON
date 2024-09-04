@@ -1,7 +1,7 @@
-import { CheckCircleIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 
 import { BodyTextThin, Button, Title } from "../../components";
+import { CheckCircleIcon } from "../../components/icons/CheckCIrcleIcon";
 
 const VerifyProfilePage = () => {
   const navigate = useNavigate();

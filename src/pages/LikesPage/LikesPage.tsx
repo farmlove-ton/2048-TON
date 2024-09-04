@@ -2,7 +2,6 @@ import { FixedSizeGrid, GridChildComponentProps } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
 import { useContext, useEffect } from "react";
 import clsx from "clsx";
-import { CircleStackIcon } from "@heroicons/react/16/solid";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
@@ -14,6 +13,7 @@ import { ModalContext } from "../../context/ModalContext";
 import { ClaimedLovePointsModal } from "../../components/Modals";
 import { pluralize } from "../../lib/utils/pluralize";
 import { hideBackButton } from "../../lib/telegram";
+import { StackedCoinsIcon } from "../../components/icons/StackedCoinsIcon";
 
 const LikesPage = () => {
   const navigate = useNavigate();
@@ -165,7 +165,7 @@ const VirtualizedList: React.FC<VirtualizedListProps> = ({
 
         {item.isNew && (
           <div className="absolute bottom-4 right-4">
-            <CircleStackIcon className="size-5 text-white" />
+            <StackedCoinsIcon className="size-5 text-white" />
           </div>
         )}
       </div>

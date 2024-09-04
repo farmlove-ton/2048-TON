@@ -1,4 +1,3 @@
-import { CheckCircleIcon, CircleStackIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useContext, useEffect } from "react";
@@ -24,13 +23,13 @@ const LovePoints = ({ amount }: { amount: number }) => {
   );
 };
 
-const Confirmed = () => {
-  return (
-    <div className="px-2 py-1 opacity-70 text-xs space-x-2 border border-white text-white  border-1 rounded-full flex items-center justify-center">
-      <span>Confirmed</span> <CircleStackIcon className="size-4" />
-    </div>
-  );
-};
+// const Confirmed = () => {
+//   return (
+//     <div className="px-2 py-1 opacity-70 text-xs space-x-2 border border-white text-white  border-1 rounded-full flex items-center justify-center">
+//       <span>Confirmed</span> <StackedCoinsIcon className="size-4" />
+//     </div>
+//   );
+// };
 
 const SuggestionPage = () => {
   const user = useAuthenticatedUser();
@@ -150,8 +149,8 @@ const SuggestionPage = () => {
       <div className="relative mt-auto p-4 space-y-4 z-10">
         <div className="flex items-center font-bold space-x-2">
           <span className="text-xl">{name}</span>
-          <CheckCircleIcon className="size-7" />
-          <Confirmed />
+          {/* <CheckCircleIcon className="size-7" />
+          <Confirmed /> */}
         </div>
         <p className="opacity-80">{bio}</p>
         <div className="flex space-x-4">

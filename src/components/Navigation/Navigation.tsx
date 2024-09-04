@@ -1,11 +1,9 @@
-import {
-  ChatBubbleOvalLeftEllipsisIcon,
-  HomeIcon,
-  UserCircleIcon,
-} from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import { Link, useLocation } from "react-router-dom";
 import LikeIcon from "./components/LikeIcon";
+import { HomePageNavigationIcon } from "../icons/HomePageNavigationIcon";
+import { TaskPageNavigationIcon } from "../icons/TaskPageNavigationIcon";
+import { InvitePageNavigationIcon } from "../icons/InvitePageNavigationIcon";
 
 interface IIcon {
   path: string;
@@ -16,12 +14,12 @@ interface IIcon {
 const items: IIcon[] = [
   {
     path: "/home",
-    Icon: HomeIcon,
+    Icon: HomePageNavigationIcon,
     name: "Home",
   },
   {
     path: "/task",
-    Icon: ChatBubbleOvalLeftEllipsisIcon,
+    Icon: TaskPageNavigationIcon,
     name: "Task",
   },
   {
@@ -31,7 +29,7 @@ const items: IIcon[] = [
   },
   {
     path: "/boost",
-    Icon: UserCircleIcon,
+    Icon: InvitePageNavigationIcon,
     name: "Boost",
   },
 ];
@@ -39,7 +37,7 @@ const items: IIcon[] = [
 const classes = {
   icon: "flex flex-col px-4 py-2 items-center justify-center rounded-md cursor-pointer",
   selected: "border border-[#9D62D9] text-[#9D62D9]",
-  notSelected: "hover:text-[#9D62D9] ",
+  notSelected: "hover:text-[#9D62D9]",
 };
 
 const Icon = (props: { icon: IIcon; selected: boolean }) => {
@@ -56,7 +54,7 @@ const Icon = (props: { icon: IIcon; selected: boolean }) => {
           selected ? classes.selected : classes.notSelected
         )}
       >
-        <div className="size-5">
+        <div className="flex size-5 items-center justify-center">
           <Icon className="w-full h-full" />
         </div>
         <span>{name}</span>

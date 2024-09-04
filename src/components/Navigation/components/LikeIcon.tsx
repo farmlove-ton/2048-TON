@@ -1,5 +1,5 @@
-import { HeartIcon } from "@heroicons/react/24/outline";
 import { useAuthenticatedUser } from "../../../hooks/useAuthenticatedUser";
+import { LikesPageNavigationIcon } from "../../icons/LikesPageNavigationIcon";
 
 export default function LikeIcon() {
   const { uncollectedLikes } = useAuthenticatedUser();
@@ -11,7 +11,7 @@ export default function LikeIcon() {
           {uncollectedLikes}
         </div>
       )}
-      <HeartIcon className="w-full h-full" />
+      <LikesPageNavigationIcon className="w-full h-full" />
     </div>
   );
 }

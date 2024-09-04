@@ -1,5 +1,4 @@
 import { useContext, useEffect } from "react";
-import { CircleStackIcon, TicketIcon } from "@heroicons/react/24/outline";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
 import {
@@ -16,6 +15,8 @@ import FarmBar from "../../components/FarmBar/FarmBar";
 import { UserContext } from "../../context/UserContext";
 import { ModalContext } from "../../context/ModalContext";
 import { hideBackButton } from "../../lib/telegram";
+import { StackedCoinsIcon } from "../../components/icons/StackedCoinsIcon";
+import { TicketsIcon } from "../../components/icons/TicketsIcon";
 
 const HomePage = () => {
   const user = useAuthenticatedUser();
@@ -77,13 +78,13 @@ const HomePage = () => {
 
             <div className="flex justify-around space-x-2 items-center">
               <div className="flex items-center space-x-1">
-                <CircleStackIcon className="size-4" />
+                <StackedCoinsIcon className="size-4" />
                 <BodyTextThin>{user.lovePoints}</BodyTextThin>
               </div>
 
               <div className="border-l h-3"></div>
               <div className="flex items-center space-x-1">
-                <TicketIcon className="size-4" />
+                <TicketsIcon className="size-4" />
                 <BodyTextThin>{user.tickets}</BodyTextThin>
               </div>
             </div>
@@ -108,7 +109,7 @@ const HomePage = () => {
             }}
           >
             <div className="flex flex-col items-start">
-              <TicketIcon className="size-8" />
+              <TicketsIcon className="size-8" />
               <SmallText>Tickets</SmallText>
               <Title>{user.tickets}</Title>
             </div>
@@ -121,7 +122,7 @@ const HomePage = () => {
             }}
           >
             <div className="flex flex-col items-start">
-              <CircleStackIcon className="size-8" />
+              <StackedCoinsIcon className="size-8" />
               <SmallText>Points</SmallText>
               <Title>{user.lovePoints}</Title>
             </div>
