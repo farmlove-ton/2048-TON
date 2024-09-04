@@ -25,10 +25,11 @@ interface User {
   maxFarmTickets: number;
   lovePoints: number;
   remainingLovePointPart: number;
-  lastFarmLovePointTimestamp: string;
+  lastFarmLovePointTimestamp: string | null;
   lovePointTimeToFull: number;
   maxLovePoints: number;
   uncollectedLikes: number;
+  maxLovePointsTime: number;
 }
 
 interface UserContextType {
@@ -101,6 +102,8 @@ const UserProvider = ({ children }: IProps) => {
         remainingLovePointPart: data.farmCounter,
         lovePointTimeToFull: data.timeToFull,
         maxLovePoints: data.maxCounter,
+        lastFarmLovePointTimestamp: data.lastFarmLovePointTimestamp,
+        maxLovePointsTime: data.maxLovePointsTime,
       });
     },
   });

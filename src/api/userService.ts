@@ -23,10 +23,11 @@ interface User {
   maxFarmTickets: number;
   lovePoints: number;
   remainingLovePointPart: number;
-  lastFarmLovePointTimestamp: string;
+  lastFarmLovePointTimestamp: string | null;
   lovePointTimeToFull: number;
   maxLovePoints: number;
   uncollectedLikes: number;
+  maxLovePointsTime: number;
 }
 
 interface CreateUser {

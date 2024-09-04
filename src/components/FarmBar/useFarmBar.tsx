@@ -1,25 +1,38 @@
 import { useEffect, useState } from "react";
 
 interface IProps {
-  farmCounter: number;
-  maxCounter: number;
-  initialTimeLeft: number;
+  lastFarmTimestamp: string | null;
+  maxTimeSeconds: number;
 }
 
-export const useFarmBar = ({
-  farmCounter,
-  maxCounter,
-  initialTimeLeft,
-}: IProps) => {
-  const percentageComplete = farmCounter / maxCounter;
-  const timeToFull = Math.ceil(initialTimeLeft / (1 - percentageComplete));
-  const [timeLeft, setTimeLeft] = useState(initialTimeLeft);
+const getInitialRemainingTimeAndPercentage = (
+  lastFarmTimestamp: string | null,
+  maxTimeSeconds: number
+) => {
+  if (!lastFarmTimestamp) {
+    return { initialRemainingTime: 0, percentage: 1 };
+  }
 
-  const progress = Math.ceil(((timeToFull - timeLeft) / timeToFull) * 100);
+  const now = new Date();
+
+  const diffSeconds =
+    (now.getTime() - new Date(lastFarmTimestamp).getTime()) / 1000;
+
+  return {
+    percentage: Math.min(diffSeconds / maxTimeSeconds, 1),
+    initialRemainingTime: Math.floor(Math.max(maxTimeSeconds - diffSeconds, 0)),
+  };
+};
+
+export const useFarmBar = ({ lastFarmTimestamp, maxTimeSeconds }: IProps) => {
+  const { initialRemainingTime, percentage } =
+    getInitialRemainingTimeAndPercentage(lastFarmTimestamp, maxTimeSeconds);
+
+  const [remainingTime, setRemainingTime] = useState(initialRemainingTime);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setTimeLeft((prevTimeLeft) => {
+      setRemainingTime((prevTimeLeft) => {
         if (prevTimeLeft <= 0) {
           clearInterval(interval);
           return 0;
@@ -32,19 +45,19 @@ export const useFarmBar = ({
   }, []);
 
   useEffect(() => {
-    setTimeLeft(initialTimeLeft);
-  }, [initialTimeLeft]);
+    setRemainingTime(initialRemainingTime);
+  }, [initialRemainingTime]);
 
   return {
-    progress,
+    progress: Math.floor(percentage * 100),
     timeLeft: {
-      hours: Math.floor(timeLeft / 3600)
+      hours: Math.floor(remainingTime / 3600)
         .toString()
         .padStart(2, "0"),
-      minutes: Math.floor((timeLeft % 3600) / 60)
+      minutes: Math.floor((remainingTime % 3600) / 60)
         .toString()
         .padStart(2, "0"),
-      seconds: (timeLeft % 60).toString().padStart(2, "0"),
+      seconds: (remainingTime % 60).toString().padStart(2, "0"),
     },
   };
 };

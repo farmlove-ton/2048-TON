@@ -127,9 +127,8 @@ const HomePage = () => {
             </div>
 
             <FarmBar
-              farmCounter={user.remainingLovePointPart}
-              maxCounter={user.maxLovePoints}
-              initialTimeLeft={user.lovePointTimeToFull}
+              lastFarmTimestamp={user.lastFarmLovePointTimestamp}
+              maxTimeSeconds={user.maxLovePointsTime}
               onFarm={farmLovePoints}
             />
           </div>

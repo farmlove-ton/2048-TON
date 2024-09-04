@@ -5,21 +5,18 @@ import { useFarmBar } from "./useFarmBar";
 
 interface IProps {
   onFarm: () => void;
-  farmCounter: number;
-  maxCounter: number;
-  initialTimeLeft: number;
+  lastFarmTimestamp: string | null;
+  maxTimeSeconds: number;
 }
 
 export default function FarmBar({
   onFarm,
-  farmCounter,
-  maxCounter,
-  initialTimeLeft,
+  lastFarmTimestamp,
+  maxTimeSeconds,
 }: IProps) {
   const { progress, timeLeft } = useFarmBar({
-    farmCounter,
-    maxCounter,
-    initialTimeLeft,
+    lastFarmTimestamp,
+    maxTimeSeconds,
   });
 
   return (
@@ -31,7 +28,7 @@ export default function FarmBar({
         {timeLeft.hours}:{timeLeft.minutes}:{timeLeft.seconds}
       </BodyText>
       <Button onClick={onFarm} className="w-32" size="small">
-        Collect
+        Claim
       </Button>
     </div>
   );

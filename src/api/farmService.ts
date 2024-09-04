@@ -6,6 +6,8 @@ interface FarmResult {
   maxCounter: number;
   newAmount: number;
   timeToFull: number;
+  lastFarmLovePointTimestamp: string | null;
+  maxLovePointsTime: number;
 }
 
 export const farmLovePoints = async (): Promise<FarmResult> => {
