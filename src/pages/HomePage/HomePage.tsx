@@ -11,7 +11,7 @@ import {
 } from "../../components";
 import PageLayout from "../../layouts/PageLayout";
 import { useAuthenticatedUser } from "../../hooks/useAuthenticatedUser";
-import { NoTicketsModal } from "../../components/Modals";
+import { NoSuggestionsModal, NoTicketsModal } from "../../components/Modals";
 import FarmBar from "../../components/FarmBar/FarmBar";
 import { UserContext } from "../../context/UserContext";
 import { ModalContext } from "../../context/ModalContext";
@@ -25,11 +25,21 @@ const HomePage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const hasNoTickets = searchParams.has("noTickets");
+  const hasNoSuggestions = searchParams.has("noSuggestions");
 
   useEffect(() => {
     hideBackButton();
   }, []);
 
+  useEffect(() => {
+    if (hasNoSuggestions) {
+      handleOpenModal(<NoSuggestionsModal />);
+
+      const newSearchParams = new URLSearchParams(searchParams.toString());
+      newSearchParams.delete("noSuggestions");
+      setSearchParams(newSearchParams);
+    }
+  }, [hasNoSuggestions, searchParams, setSearchParams, handleOpenModal]);
 
   useEffect(() => {
     if (hasNoTickets) {

@@ -64,6 +64,7 @@ const UserProvider = ({ children }: IProps) => {
     queryKey: ["user"],
     queryFn: fetchUser,
     retry: false,
+    refetchInterval: 10000,
   });
 
   const retreiveDailyRewardMutation = useMutation({

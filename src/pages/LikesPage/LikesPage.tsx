@@ -1,6 +1,6 @@
 import { FixedSizeGrid, GridChildComponentProps } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import clsx from "clsx";
 import { CircleStackIcon } from "@heroicons/react/16/solid";
 import { useNavigate } from "react-router-dom";

@@ -1,7 +1,7 @@
 import { CheckCircleIcon, CircleStackIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 import { Button, Spinner } from "../../components";
 import Navigation from "../../components/Navigation/Navigation";
@@ -41,22 +41,41 @@ const SuggestionPage = () => {
   useEffect(() => {
     showBackButton();
   }, []);
+
+  const { data, isFetching, refetch, error } = useQuery({
     queryKey: ["suggestion"],
     queryFn: fetchSuggestion,
     retry: false,
   });
 
-  const catchSkipErr = (err: unknown) => {
+  const catchErr = (err: AxiosError) => {
+    const response = err.response;
+
+    if (!response) {
+      return;
+    }
+
+    const data = response.data;
+
     if (
-      err &&
-      typeof err === "object" &&
-      "message" in err &&
-      Array.isArray(err.message) &&
+      data &&
+      typeof data === "object" &&
+      "message" in data &&
+      Array.isArray(data.message) &&
       err.message[0] === "You have not enough tickets"
     ) {
       navigate("/home?noTickets=true");
+    } else if (response.status === 404) {
+      navigate("/home?noSuggestions=true");
     }
   };
+
+  useEffect(() => {
+    if (error instanceof AxiosError) {
+      catchErr(error);
+    }
+  }, [error]);
+
   const likeMutation = useMutation({
     mutationFn: like,
   });
@@ -77,7 +96,7 @@ const SuggestionPage = () => {
     const result = await refetch();
 
     if (result.error instanceof AxiosError) {
-      catchSkipErr(result.error.response?.data);
+      catchErr(result.error);
     }
   };
 
@@ -109,7 +128,7 @@ const SuggestionPage = () => {
       }
     } catch (err) {
       if (err instanceof AxiosError) {
-        catchSkipErr(err.response?.data);
+        catchErr(err);
       }
     }
   };
