@@ -1,17 +1,25 @@
 import { FixedSizeGrid, GridChildComponentProps } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
-
-import { BodyText, Button, SmallText, Spinner, Title } from "../../components";
-import PageLayout from "../../layouts/PageLayout";
+import { useContext } from "react";
 import clsx from "clsx";
 import { CircleStackIcon } from "@heroicons/react/16/solid";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+
+import { BodyText, Button, SmallText, Spinner, Title } from "../../components";
+import PageLayout from "../../layouts/PageLayout";
 import { collectLikes, fetchLikes, Like } from "../../api/likesService";
+import { useAuthenticatedUser } from "../../hooks/useAuthenticatedUser";
+import { ModalContext } from "../../context/ModalContext";
+import { ClaimedLovePointsModal } from "../../components/Modals";
+import { pluralize } from "../../lib/utils/pluralize";
 
 const LikesPage = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { handleOpenModal } = useContext(ModalContext);
+
+  const user = useAuthenticatedUser();
 
   const { data: likes, isFetching } = useQuery({
     queryKey: ["likes"],
@@ -22,12 +30,17 @@ const LikesPage = () => {
   const collectLikesMutation = useMutation({
     mutationFn: collectLikes,
     onSuccess: (data) => {
+      handleOpenModal(
+        <ClaimedLovePointsModal amount={user.uncollectedLikes} />
+      );
+
       queryClient.setQueryData<Like[]>(["likes"], data);
+      queryClient.invalidateQueries({ queryKey: ["user"] });
     },
   });
 
   const handleCollectLikes = () => {
-    return collectLikesMutation.mutate();
+    collectLikesMutation.mutate();
   };
 
   if (isFetching) {
@@ -66,8 +79,17 @@ const LikesPage = () => {
       </div>
 
       <div className="fixed w-full bottom-20 p-4 left-0">
-        <Button className="w-full" onClick={handleCollectLikes}>
-          Collect
+        <Button
+          className="w-full"
+          onClick={handleCollectLikes}
+          disabled={!user.uncollectedLikes}
+        >
+          {user.uncollectedLikes
+            ? `Claim ${user.uncollectedLikes} love ${pluralize(
+                "point",
+                user.uncollectedLikes
+              )}`
+            : "Claim"}
         </Button>
       </div>
     </PageLayout>
@@ -136,9 +158,11 @@ const VirtualizedList: React.FC<VirtualizedListProps> = ({
           </div>
         )}
 
-        <div className="absolute bottom-4 right-4">
-          <CircleStackIcon className="size-5 text-white" />
-        </div>
+        {item.isNew && (
+          <div className="absolute bottom-4 right-4">
+            <CircleStackIcon className="size-5 text-white" />
+          </div>
+        )}
       </div>
     );
   };
