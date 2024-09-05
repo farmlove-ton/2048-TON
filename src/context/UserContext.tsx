@@ -77,7 +77,7 @@ const UserProvider = ({ children }: IProps) => {
 
       queryClient.setQueryData<User>(["user"], {
         ...user,
-        tickets: data.tickets,
+        tickets: data.updatedUserTicketsAmount,
       });
     },
   });

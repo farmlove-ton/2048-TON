@@ -15,13 +15,13 @@ const classes = {
 
 const WithError = ({ error, children }: IProps) => {
   return (
-    <div>
+    <>
       {children}
 
       {!!error && (
         <BodyTextThin className={classes.error}>{error}</BodyTextThin>
       )}
-    </div>
+    </>
   );
 };
 

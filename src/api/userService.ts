@@ -73,5 +73,7 @@ export const uploadPhoto = async (formData: FormData): Promise<string> => {
 };
 
 export const retreiveDailyReward = async () => {
-  return post<User>(`/user/tickets/dailyreward`);
+  return post<{ updatedUserTicketsAmount: number }>(
+    `/user/tickets/dailyreward`
+  );
 };
