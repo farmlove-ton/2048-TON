@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createContext, useEffect, useRef } from "react";
+import { createContext, useEffect } from "react";
 import {
   DailyReward,
   fetchUser,
@@ -59,8 +59,6 @@ interface IProps {
 }
 
 const UserProvider = ({ children }: IProps) => {
-  const rewardRetrieved = useRef(false);
-
   const queryClient = useQueryClient();
 
   const {
@@ -89,11 +87,10 @@ const UserProvider = ({ children }: IProps) => {
   });
 
   useEffect(() => {
-    if (user && !rewardRetrieved.current) {
+    if (user) {
       retreiveDailyRewardMutation.mutate();
-      rewardRetrieved.current = true;
     }
-  }, [user, rewardRetrieved]);
+  }, [user]);
 
   const farmLovePointsMutation = useMutation({
     mutationFn: farmLovePoints,

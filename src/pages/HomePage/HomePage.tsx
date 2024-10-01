@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
 import {
@@ -20,6 +20,8 @@ import { TicketsIcon } from "../../components/icons/TicketsIcon";
 import { DailyRewardModal } from "../../components/Modals/DailyRewardModal";
 
 const HomePage = () => {
+  const gotReward = useRef(false);
+
   const user = useAuthenticatedUser();
   const { farmLovePoints, dailyReward } = useContext(UserContext);
   const { handleOpenModal } = useContext(ModalContext);
@@ -34,15 +36,16 @@ const HomePage = () => {
   }, []);
 
   useEffect(() => {
-    if (dailyReward && dailyReward.rewardedNow) {
+    if (dailyReward && dailyReward.rewardedNow && !gotReward.current) {
       handleOpenModal(
         <DailyRewardModal
           rewards={dailyReward.rewards}
           updatedUserTicketsAmount={dailyReward.updatedUserTicketsAmount}
         />
       );
+      gotReward.current = true;
     }
-  }, [handleOpenModal, dailyReward]);
+  }, [handleOpenModal, dailyReward, gotReward]);
 
   useEffect(() => {
     if (hasNoSuggestions) {
