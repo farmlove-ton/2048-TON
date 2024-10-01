@@ -1,6 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createContext, useEffect, useRef } from "react";
-import { fetchUser, retreiveDailyReward } from "../api/userService";
+import {
+  DailyReward,
+  fetchUser,
+  retreiveDailyReward,
+} from "../api/userService";
 import { farmLovePoints } from "../api/farmService";
 import { Sex } from "../api/types";
 
@@ -38,6 +42,7 @@ interface UserContextType {
   refetchUser: () => void;
   farmLovePoints: () => void;
   takeTicket: () => void;
+  dailyReward: DailyReward | null;
 }
 
 const UserContext = createContext<UserContextType>({
@@ -46,6 +51,7 @@ const UserContext = createContext<UserContextType>({
   refetchUser: () => {},
   farmLovePoints: () => {},
   takeTicket: () => {},
+  dailyReward: null,
 });
 
 interface IProps {
@@ -131,6 +137,7 @@ const UserProvider = ({ children }: IProps) => {
         refetchUser: refetch,
         farmLovePoints: handleFarmLovePoints,
         takeTicket,
+        dailyReward: retreiveDailyRewardMutation.data || null,
       }}
     >
       {children}

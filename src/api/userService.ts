@@ -44,6 +44,14 @@ interface CreateUser {
   suggestionAgeMax: number;
 }
 
+export interface DailyReward {
+  updatedUserTicketsAmount: number;
+  rewardedNow: boolean;
+  rewards: { reward: number; status: RewardStatus }[];
+}
+
+export type RewardStatus = "claimed_today" | "already_claimed" | "not_claimed";
+
 export const fetchUser = async (): Promise<User> => {
   return get<User>(`/user`);
 };
@@ -73,7 +81,5 @@ export const uploadPhoto = async (formData: FormData): Promise<string> => {
 };
 
 export const retreiveDailyReward = async () => {
-  return post<{ updatedUserTicketsAmount: number }>(
-    `/user/tickets/dailyreward`
-  );
+  return post<DailyReward>(`/user/tickets/dailyreward`);
 };

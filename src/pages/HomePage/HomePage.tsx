@@ -17,10 +17,11 @@ import { ModalContext } from "../../context/ModalContext";
 import { hideBackButton } from "../../lib/telegram";
 import { StackedCoinsIcon } from "../../components/icons/StackedCoinsIcon";
 import { TicketsIcon } from "../../components/icons/TicketsIcon";
+import { DailyRewardModal } from "../../components/Modals/DailyRewardModal";
 
 const HomePage = () => {
   const user = useAuthenticatedUser();
-  const { farmLovePoints } = useContext(UserContext);
+  const { farmLovePoints, dailyReward } = useContext(UserContext);
   const { handleOpenModal } = useContext(ModalContext);
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -31,6 +32,17 @@ const HomePage = () => {
   useEffect(() => {
     hideBackButton();
   }, []);
+
+  useEffect(() => {
+    if (dailyReward && (dailyReward.rewardedNow || true)) {
+      handleOpenModal(
+        <DailyRewardModal
+          rewards={dailyReward.rewards}
+          updatedUserTicketsAmount={dailyReward.updatedUserTicketsAmount}
+        />
+      );
+    }
+  }, [handleOpenModal, dailyReward]);
 
   useEffect(() => {
     if (hasNoSuggestions) {
