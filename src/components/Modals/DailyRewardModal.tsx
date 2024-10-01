@@ -24,19 +24,18 @@ const rewardStyleByStatus: Record<RewardStatus, string> = {
   not_claimed: "border-gray-500",
 };
 
-export const DailyRewardModal = ({
-  updatedUserTicketsAmount,
-  rewards,
-}: IProps) => {
+export const DailyRewardModal = ({ rewards }: IProps) => {
   const { handleCloseModal } = useContext(ModalContext);
+
+  const todayReward = rewards.find((r) => r.status === "claimed_today");
 
   return (
     <>
       <Title>Daily reward</Title>
       <div>
         <BodyText>
-          Wow, you got <strong>{updatedUserTicketsAmount}</strong> tickets as
-          daily reward.
+          Wow, you got <strong>{todayReward?.reward}</strong> tickets as daily
+          reward.
         </BodyText>
         <BodyText>Keep going to increase your check-in strike!</BodyText>
       </div>

@@ -34,7 +34,7 @@ const HomePage = () => {
   }, []);
 
   useEffect(() => {
-    if (dailyReward && (dailyReward.rewardedNow || true)) {
+    if (dailyReward && dailyReward.rewardedNow) {
       handleOpenModal(
         <DailyRewardModal
           rewards={dailyReward.rewards}
