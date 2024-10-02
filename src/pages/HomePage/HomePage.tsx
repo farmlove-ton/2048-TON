@@ -2,10 +2,10 @@ import { useContext, useEffect, useRef } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
 import {
-  BodyTextThin,
   Button,
   CircleImage,
   SmallText,
+  Subtitle,
   Title,
 } from "../../components";
 import PageLayout from "../../layouts/PageLayout";
@@ -15,9 +15,11 @@ import FarmBar from "../../components/FarmBar/FarmBar";
 import { UserContext } from "../../context/UserContext";
 import { ModalContext } from "../../context/ModalContext";
 import { hideBackButton } from "../../lib/telegram";
-import { StackedCoinsIcon } from "../../components/icons/StackedCoinsIcon";
 import { TicketsIcon } from "../../components/icons/TicketsIcon";
 import { DailyRewardModal } from "../../components/Modals/DailyRewardModal";
+import { PencilIcon } from "../../components/icons/PencilIcon";
+import { AvatarIcon } from "../../components/icons/AvatarIcon";
+import { HeartIcon } from "../../components/icons/HeartIcon";
 
 const HomePage = () => {
   const gotReward = useRef(false);
@@ -78,73 +80,73 @@ const HomePage = () => {
 
   return (
     <PageLayout>
-      <div className="relative flex flex-col">
-        <div className="flex items-start space-x-6">
-          {user.photoUrl && (
-            <div className="relative w-24 h-24">
-              <CircleImage alt="avatar" src={user.photoUrl} />
-            </div>
-          )}
+      <div className="h-full relative flex flex-col justify-between">
+        <div className="flex flex-col items-center space-y-3 h-full">
+          <div className="relative">
+            {user.photoUrl ? (
+              <>
+                <CircleImage
+                  className="size-24"
+                  alt="avatar"
+                  src={user.photoUrl}
+                />
+                <Link
+                  to={"/edit-profile"}
+                  style={{
+                    background:
+                      "linear-gradient(180deg, #1a1a1a 0%, #2c1a48 30%, #1a1a1a 100%)",
+                  }}
+                  className="absolute rounded-full border border-gray-600/50 right-0 p-1 bottom-[1px]"
+                >
+                  <PencilIcon className="size-3" />
+                </Link>
+              </>
+            ) : (
+              <Link to={"/edit-profile"}>
+                <AvatarIcon className="size-24" />
+              </Link>
+            )}
+          </div>
 
-          <div className="flex flex-col items-start">
-            <Title>
-              {user.firstName}, {user.age}
-            </Title>
+          <Title className="text-center">
+            {user.firstName}, {user.age}
+          </Title>
 
-            <div className="flex justify-around space-x-2 items-center">
-              <div className="flex items-center space-x-1">
-                <StackedCoinsIcon className="size-4" />
-                <BodyTextThin>{user.lovePoints}</BodyTextThin>
+          <div className="flex space-x-4 w-full justify-center">
+            <div
+              className="flex py-1 px-4 rounded-xl border border-gray-600/50 items-center space-x-2 w-5/12 justify-center"
+              style={{
+                background:
+                  "linear-gradient(3deg, rgb(0 0 0 / 70%), rgb(0 0 0 / 10%))",
+              }}
+            >
+              <TicketsIcon className="size-6" />
+              <div className="flex flex-col">
+                <Subtitle>{user.tickets}</Subtitle>
+                <SmallText>Tickets</SmallText>
               </div>
+            </div>
 
-              <div className="border-l h-3"></div>
-              <div className="flex items-center space-x-1">
-                <TicketsIcon className="size-4" />
-                <BodyTextThin>{user.tickets}</BodyTextThin>
+            <div
+              className="flex py-1 px-4 rounded-xl border border-gray-600/50 items-center space-x-2 w-5/12 justify-center"
+              style={{
+                background:
+                  "linear-gradient(3deg, rgb(0 0 0 / 70%), rgb(0 0 0 / 10%))",
+              }}
+            >
+              <HeartIcon className="size-6" />
+              <div className="flex flex-col">
+                <Subtitle>{user.lovePoints}</Subtitle>
+                <SmallText>Points</SmallText>
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="w-full flex space-x-4 mt-4">
-          <Link to="/edit-profile" className="flex-1">
-            <Button className="w-full">Edit profile</Button>
-          </Link>
-          <div className="flex-1">
-            <Button className="w-full">Share profile</Button>
-          </div>
-        </div>
-
-        <div className="flex flex-col space-y-2 mt-4">
-          <div
-            className="flex-1 flex flex-row border border-gray-600/50 rounded-xl px-6 py-3 justify-between"
-            style={{
-              background:
-                "linear-gradient(3deg, rgb(0 0 0 / 70%), rgb(0 0 0 / 10%))",
-            }}
-          >
-            <div className="flex flex-col items-start">
-              <TicketsIcon className="size-8" />
-              <SmallText>Tickets</SmallText>
-              <Title>{user.tickets}</Title>
-            </div>
-          </div>
-          <div
-            className="flex-1 flex flex-row border border-gray-600/50 rounded-xl px-6 py-3 justify-between"
-            style={{
-              background:
-                "linear-gradient(3deg, rgb(0 0 0 / 70%), rgb(0 0 0 / 10%))",
-            }}
-          >
-            <div className="flex flex-col items-start">
-              <StackedCoinsIcon className="size-8" />
-              <SmallText>Points</SmallText>
-              <Title>{user.lovePoints}</Title>
-            </div>
-
+          <div className="h-full flex items-center justify-center">
             <FarmBar
               lastFarmTimestamp={user.lastFarmLovePointTimestamp}
               maxTimeSeconds={user.maxLovePointsTime}
+              maxPoints={user.maxLovePoints}
               onFarm={farmLovePoints}
             />
           </div>

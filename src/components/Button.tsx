@@ -18,7 +18,7 @@ const classes = {
   button:
     "rounded-2xl font-medium cursor-pointer transition-colors duration-200 focus:outline-none hover:opacity-90 inline-flex items-center justify-center disabled:bg-opacity-50 disabled:cursor-default",
   small: "text-xs py-1 px-4",
-  normal: "text-base py-2 px-4",
+  normal: "text-base py-3 px-4",
 };
 
 const colorClasses: Record<TVariants, Record<TColors, string>> = {

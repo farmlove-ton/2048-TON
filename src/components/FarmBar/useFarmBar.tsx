@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 interface IProps {
   lastFarmTimestamp: string | null;
   maxTimeSeconds: number;
+  maxPoints: number;
 }
 
 const getInitialRemainingTimeAndPercentage = (
@@ -24,7 +25,11 @@ const getInitialRemainingTimeAndPercentage = (
   };
 };
 
-export const useFarmBar = ({ lastFarmTimestamp, maxTimeSeconds }: IProps) => {
+export const useFarmBar = ({
+  lastFarmTimestamp,
+  maxTimeSeconds,
+  maxPoints,
+}: IProps) => {
   const { initialRemainingTime, percentage } =
     getInitialRemainingTimeAndPercentage(lastFarmTimestamp, maxTimeSeconds);
 
@@ -48,8 +53,11 @@ export const useFarmBar = ({ lastFarmTimestamp, maxTimeSeconds }: IProps) => {
     setRemainingTime(initialRemainingTime);
   }, [initialRemainingTime]);
 
+  // Calculate current love points based on percentage
+  const currentPoints = Math.min(Math.floor(percentage * maxPoints), maxPoints);
+
   return {
-    progress: Math.floor(percentage * 1000) / 10,
+    progress: Math.floor(percentage * 1000) / 100,
     timeLeft: {
       hours: Math.floor(remainingTime / 3600)
         .toString()
@@ -59,5 +67,6 @@ export const useFarmBar = ({ lastFarmTimestamp, maxTimeSeconds }: IProps) => {
         .padStart(2, "0"),
       seconds: (remainingTime % 60).toString().padStart(2, "0"),
     },
+    currentPoints,
   };
 };

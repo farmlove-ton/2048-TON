@@ -25,11 +25,17 @@ export default function LikeMatchModal({ suggestion, onKeepSwiping }: IProps) {
       <BodyText>Unleashing a new friendship</BodyText>
       <div className="flex justify-center">
         <div className="size-20">
-          {user.photoUrl && <CircleImage src={user.photoUrl} alt="avatar" />}
+          {user.photoUrl && (
+            <CircleImage className="size-20" src={user.photoUrl} alt="avatar" />
+          )}
         </div>
         <div className="size-20 -ml-4">
           {suggestion.photoUrl && (
-            <CircleImage src={suggestion.photoUrl} alt="avatar" />
+            <CircleImage
+              className="size-20"
+              src={suggestion.photoUrl}
+              alt="avatar"
+            />
           )}
         </div>
       </div>
