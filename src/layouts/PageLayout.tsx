@@ -10,7 +10,7 @@ const PageLayout = ({
 }) => {
   return (
     <div className="flex h-full flex-col justify-between">
-      <div className={clsx("px-4 h-full", className)}>{children}</div>
+      <div className={clsx("px-4 pt-2 h-full", className)}>{children}</div>
       <Navigation />
     </div>
   );

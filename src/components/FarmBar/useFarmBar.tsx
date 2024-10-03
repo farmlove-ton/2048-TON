@@ -6,6 +6,14 @@ interface IProps {
   maxPoints: number;
 }
 
+function formatDateString(dateString: string) {
+  // Normalize timezone format by inserting a colon if necessary
+  return dateString
+    .replace(/([+-]\d{2})(\d{2})$/, "$1:$2") // Insert a colon in the timezone part
+    .replace(" ", "T")
+    .replace(" ", "");
+}
+
 const getInitialRemainingTimeAndPercentage = (
   lastFarmTimestamp: string | null,
   maxTimeSeconds: number
@@ -17,7 +25,8 @@ const getInitialRemainingTimeAndPercentage = (
   const now = new Date();
 
   const diffSeconds =
-    (now.getTime() - new Date(lastFarmTimestamp).getTime()) / 1000;
+    (now.getTime() - new Date(formatDateString(lastFarmTimestamp)).getTime()) /
+    1000;
 
   return {
     percentage: Math.min(diffSeconds / maxTimeSeconds, 1),
