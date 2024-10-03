@@ -109,6 +109,16 @@ const UserProvider = ({ children }: IProps) => {
         maxLovePointsTime: data.maxLovePointsTime,
       });
     },
+    onMutate: () => {
+      if (!user) {
+        throw new Error("User not found");
+      }
+
+      queryClient.setQueryData<User>(["user"], {
+        ...user,
+        lastFarmLovePointTimestamp: new Date().toISOString(),
+      });
+    },
   });
 
   const takeTicket = () => {

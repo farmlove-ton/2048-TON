@@ -56,7 +56,7 @@ export const useFarmBar = ({
     }, 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [remainingTime]);
 
   useEffect(() => {
     setRemainingTime(initialRemainingTime);
