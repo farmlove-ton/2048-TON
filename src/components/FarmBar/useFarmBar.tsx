@@ -66,7 +66,7 @@ export const useFarmBar = ({
   const currentPoints = Math.min(Math.floor(percentage * maxPoints), maxPoints);
 
   return {
-    progress: Math.floor(percentage * 1000) / 100,
+    progress: Math.floor(percentage * 100) / 100,
     timeLeft: {
       hours: Math.floor(remainingTime / 3600)
         .toString()
